@@ -108,11 +108,11 @@ describe("dates", () => {
 describe("basics", () => {
   const empty = {
     name: "", headline: "", email: "", phone: "", dob: "", website: "",
-    address: "", city: "", country: "", linkedin: "", summary: "",
+    address: "", city: "", country: "", linkedin: "", github: "", summary: "",
   };
 
   it("counts filled required fields, ignoring whitespace", () => {
-    expect(BASICS_FIELDS).toHaveLength(11);
+    expect(BASICS_FIELDS).toHaveLength(12);
     expect(filledBasics(empty)).toBe(0);
     expect(filledBasics({ ...empty, name: "Jane", email: "jane.doe@example.com", city: "  " })).toBe(2);
   });
@@ -141,7 +141,7 @@ describe("profile strength", () => {
   });
 
   it("leaves out the optional basics (#216)", () => {
-    const optional = { ...basics, phone: "p", dob: "1992-04-18", website: "w", address: "a", linkedin: "l" };
+    const optional = { ...basics, phone: "p", dob: "1992-04-18", website: "w", address: "a", linkedin: "l", github: "g" };
     expect(profileStrength({ ...none, basics: optional }).percent).toBe(0);
     expect(filledBasics(optional)).toBe(0);
   });
