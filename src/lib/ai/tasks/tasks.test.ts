@@ -334,7 +334,7 @@ describe("resumeUnits' skills (#280)", () => {
     const bigProfile = { ...demoProfile(), skills: manySkills };
     const { data } = await tailorResume(
       model({ summary: "Summary", roles: [], projects: [], education: [], skills: manySkills.map((s) => s.name) }),
-      { profile: bigProfile, extracted: { title: "Eng", company: "Acme", place: "", country: "", remote: false, email: null, requirements: [], language: "English" }, match: null, facts: [], posting: "" },
+      { profile: bigProfile, extracted, match: null, facts: [], posting: "" },
       { creativity: "BALANCED", strict: false, language: "English" },
     );
     expect(skillNamesIn(data.find((unit) => unit.id === "skills")!.text)).toHaveLength(16);
