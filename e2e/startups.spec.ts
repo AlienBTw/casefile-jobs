@@ -62,7 +62,7 @@ test("finds hiring startups with the addresses they publish, and leaves alone wh
   // Tulipworks' robots.txt keeps Dossier out, and every request says what it is.
   const requests = await fakeStartupRequests();
   expect(requests.filter((request) => request.url.includes("tulipworks")).map((request) => request.url)).toEqual(["https://tulipworks.example/robots.txt"]);
-  expect(requests.every((request) => /Dossier\/[\w.-]+; \+https:\/\/github\.com\/AienTech\/dossier\/blob\/main\/PRIVACY\.md#startups/.test(request.userAgent))).toBe(true);
+  expect(requests.every((request) => /CasefileJobs\/[\w.-]+; \+https:\/\/github\.com\/AlienBTw\/casefile-jobs\/blob\/main\/PRIVACY\.md#startups/.test(request.userAgent))).toBe(true);
   await open("Tulipworks");
   await expect(preview.getByRole("list", { name: "Addresses they publish" })).toHaveCount(0);
 

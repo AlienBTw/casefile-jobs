@@ -17,9 +17,9 @@ const status: SettingsStatus = {
   agent: on("On · daily at 07:00"),
   google: on("Gmail and Calendar"),
   notifications: on("1 channel"),
-  connector: { tone: "off", state: "Use Dossier from Claude and other MCP apps", meta: "Off", note: "Off", problem: null },
+  connector: { tone: "off", state: "Use Casefile Jobs from Claude and other MCP apps", meta: "Off", note: "Off", problem: null },
   data: on("Backed up today at 02:00"),
-  about: { tone: "look", state: "You have 1.15.0 · 1.16.0 is out", meta: "PostgreSQL · 11 applications", note: "1.16.0 is out", problem: { summary: "Dossier 1.16.0 is out", fix: "See what's new" } },
+  about: { tone: "look", state: "You have 1.15.0 · 1.16.0 is out", meta: "PostgreSQL · 11 applications", note: "1.16.0 is out", problem: { summary: "Casefile Jobs 1.16.0 is out", fix: "See what's new" } },
 };
 
 describe("SettingsScreen (E34-3)", () => {
@@ -58,7 +58,7 @@ describe("SettingsOverview (E34-2)", () => {
   it("leads with what needs a look and its first fix, then a card per section in four groups", () => {
     render(<SettingsOverview status={status} />);
     const banner = screen.getByRole("region", { name: "Needs a look" });
-    expect(banner).toHaveTextContent("Two things to look at. Adzuna has failed since 12 Nov and Dossier 1.16.0 is out.");
+    expect(banner).toHaveTextContent("Two things to look at. Adzuna has failed since 12 Nov and Casefile Jobs 1.16.0 is out.");
     expect(within(banner).getByRole("link", { name: "Fix Adzuna" })).toHaveAttribute("href", "/settings?section=jobs");
 
     const writing = screen.getByRole("region", { name: "Writing" });

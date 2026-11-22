@@ -74,10 +74,10 @@ describe("a config from a link", () => {
   it("isn't read from the user's own network or over http", async () => {
     expect(await fetchConfigText("http://example.com/portal.json")).toEqual({ ok: false, problem: "Use an https:// link to the config file." });
     for (const link of ["https://127.0.0.1/portal.json", "https://localhost/portal.json", "https://[::1]/portal.json"]) {
-      expect(await fetchConfigText(link)).toEqual({ ok: false, problem: "Dossier doesn't read links on your own network." });
+      expect(await fetchConfigText(link)).toEqual({ ok: false, problem: "Casefile Jobs doesn't read links on your own network." });
     }
     undici.answer = refused;
-    expect(await fetchConfigText("https://intranet.example.com/portal.json")).toEqual({ ok: false, problem: "Dossier doesn't read links on your own network." });
+    expect(await fetchConfigText("https://intranet.example.com/portal.json")).toEqual({ ok: false, problem: "Casefile Jobs doesn't read links on your own network." });
     expect(undici.calls).toHaveLength(1);
   });
 });

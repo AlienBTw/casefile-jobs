@@ -77,7 +77,14 @@ describe("whether the usage ping goes (#172)", () => {
     expect(usagePingChoice(answered("on", USAGE_PING_TEXT_VERSION - 1), undefined)).toEqual({ choice: null, source: null });
   });
 
+  it("stays off without a configured telemetry receiver", () => {
+    expect(USAGE_PING_URL).toBeNull();
+    expect(usagePingEnabled(answered("on"))).toBe(false);
+    expect(askForUsagePing(unanswered)).toBe(false);
+  });
+
   it("is on only after a yes, and asked only while nobody has answered, in production alone", () => {
+    telemetry.testUrl = "http://localhost:3998/ping";
     expect(usagePingEnabled(unanswered)).toBe(false);
     expect(askForUsagePing(unanswered)).toBe(true);
     expect(usagePingEnabled(answered("on"))).toBe(true);
@@ -95,6 +102,7 @@ describe("whether the usage ping goes (#172)", () => {
   });
 
   it("logs what it sends while it's on, how to answer while nobody has, and nothing once it's off", () => {
+    telemetry.testUrl = "http://localhost:3998/ping";
     expect(usagePingNotice(answered("on"))).toBe(USAGE_PING_NOTICE);
     expect(usagePingNotice(unanswered)).toBe(USAGE_PING_QUESTION_NOTICE);
     expect(usagePingNotice(answered("off"))).toBeNull();
@@ -109,6 +117,7 @@ describe("answering (#172)", () => {
   });
 
   it("forgets the install's ID on a no, so a later yes starts a new one", async () => {
+    telemetry.testUrl = "http://localhost:3998/ping";
     await saveSettings({ usagePingId: ID, usagePingDay: "2026-10-15" });
     await saveUsagePingChoice("off", morning);
     expect(await loadSettings()).toMatchObject({ usagePingChoice: "off", usagePingId: null, usagePingDay: null });
@@ -120,6 +129,7 @@ describe("answering (#172)", () => {
   });
 
   it("keeps the ID of an install that pinged before, if it says yes", async () => {
+    telemetry.testUrl = "http://localhost:3998/ping";
     await saveSettings({ usagePingId: ID });
     await saveUsagePingChoice("on", morning);
     const fetchImpl = answering();
@@ -150,6 +160,7 @@ describe("the usage ping", () => {
   });
 
   it("sends nothing and stores nothing before a yes, in development, or with DOSSIER_TELEMETRY=off", async () => {
+    telemetry.testUrl = "http://localhost:3998/ping";
     const fetchImpl = answering();
     // An install that pinged before 1.8 and hasn't answered yet.
     await saveSettings({ usagePingId: ID });
@@ -165,12 +176,14 @@ describe("the usage ping", () => {
   });
 
   it("goes with DOSSIER_TELEMETRY=on without an answer in the app", async () => {
+    telemetry.testUrl = "http://localhost:3998/ping";
     telemetry.value = "on";
     const fetchImpl = answering();
     expect(await pingIfNewDay({ now: morning, fetchImpl })).toBe("sent");
   });
 
   it("goes on the next page after a yes, even later the same day", async () => {
+    telemetry.testUrl = "http://localhost:3998/ping";
     const fetchImpl = answering();
     expect(await pingIfNewDay({ now: morning, fetchImpl })).toBe("skipped");
     await saveUsagePingChoice("on", morning);
@@ -178,6 +191,7 @@ describe("the usage ping", () => {
   });
 
   it("sends only a random install ID and the version, and keeps the ID", async () => {
+    telemetry.testUrl = "http://localhost:3998/ping";
     await saveUsagePingChoice("on", morning);
     const fetchImpl = answering();
     expect(await pingIfNewDay({ now: morning, fetchImpl })).toBe("sent");
@@ -185,10 +199,11 @@ describe("the usage ping", () => {
     const { usagePingId, usagePingDay } = await loadSettings();
     expect(usagePingId).toMatch(UUID);
     expect(usagePingDay).toBe("2026-10-16");
-    expect(sent(fetchImpl)).toEqual([{ url: USAGE_PING_URL, method: "POST", body: { id: usagePingId, version: appVersion } }]);
+    expect(sent(fetchImpl)).toEqual([{ url: "http://localhost:3998/ping", method: "POST", body: { id: usagePingId, version: appVersion } }]);
   });
 
   it("goes once a day, even across a restart, and the next day with the same ID", async () => {
+    telemetry.testUrl = "http://localhost:3998/ping";
     await saveUsagePingChoice("on", morning);
     const fetchImpl = answering();
     await pingIfNewDay({ now: morning, fetchImpl });
@@ -204,6 +219,7 @@ describe("the usage ping", () => {
   });
 
   it("sends it once when pages load at the same time", async () => {
+    telemetry.testUrl = "http://localhost:3998/ping";
     await saveUsagePingChoice("on", morning);
     const fetchImpl = answering();
     const results = await Promise.all([1, 2, 3].map(() => pingIfNewDay({ now: morning, fetchImpl })));
@@ -212,6 +228,7 @@ describe("the usage ping", () => {
   });
 
   it("doesn't try again the same day when it fails", async () => {
+    telemetry.testUrl = "http://localhost:3998/ping";
     await saveSettings({ usagePingId: ID });
     await saveUsagePingChoice("on", morning);
     const offline = vi.fn<typeof fetch>(async () => {
@@ -224,9 +241,10 @@ describe("the usage ping", () => {
     expect(await loadSettings()).toMatchObject({ usagePingId: ID, usagePingDay: "2026-10-16" });
   });
 
-  it("counts an error answer as not arriving, and goes to the test receiver when one is set", async () => {
-    expect(await sendPing(ID, answering(503))).toBe(false);
-    expect(await sendPing(ID, answering(204))).toBe(true);
+  it("counts an error answer as not arriving, returns false without a receiver, and goes to the test receiver when one is set", async () => {
+    expect(await sendPing(ID, answering(204))).toBe(false);
+    expect(await sendPing(ID, answering(503), "http://localhost:3998/ping")).toBe(false);
+    expect(await sendPing(ID, answering(204), "http://localhost:3998/ping")).toBe(true);
     telemetry.testUrl = "http://localhost:3998/ping";
     const fetchImpl = answering();
     await sendPing(ID, fetchImpl);

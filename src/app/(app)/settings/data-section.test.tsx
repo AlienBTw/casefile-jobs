@@ -66,10 +66,10 @@ describe("Download all PDFs (E10-5)", () => {
     expect(screen.getByRole("button", { name: "Zipping…" })).toHaveAttribute("aria-disabled", "true");
     expect(screen.getByRole("status")).toHaveTextContent("Rendered 3 of 12…");
 
-    const result = { file: "f.zip", fileName: "dossier-pdfs-2026-09-28.zip", documents: 12 };
+    const result = { file: "f.zip", fileName: "casefile-jobs-pdfs-2026-09-28.zip", documents: 12 };
     act(() => jobs.report?.({ id: "zip-1", type: "zip-pdfs", status: "DONE", step: null, error: null, result }));
-    expect(screen.getByRole("link", { name: "Download dossier-pdfs-2026-09-28.zip" })).toHaveAttribute("href", "/api/downloads/zip-1");
-    expect(toast).toHaveBeenLastCalledWith("dossier-pdfs-2026-09-28.zip is ready.", { action: expect.objectContaining({ label: "Download" }) });
+    expect(screen.getByRole("link", { name: "Download casefile-jobs-pdfs-2026-09-28.zip" })).toHaveAttribute("href", "/api/downloads/zip-1");
+    expect(toast).toHaveBeenLastCalledWith("casefile-jobs-pdfs-2026-09-28.zip is ready.", { action: expect.objectContaining({ label: "Download" }) });
   });
 
   it("says so when there's nothing to zip", async () => {
@@ -113,11 +113,11 @@ describe("Import (E10-6)", () => {
 
   it("shows why a file can't be imported", async () => {
     const user = userEvent.setup();
-    vi.stubGlobal("fetch", vi.fn(async () => Response.json({ error: "That file isn't a Dossier export." }, { status: 400 })));
+    vi.stubGlobal("fetch", vi.fn(async () => Response.json({ error: "That file isn't a Casefile Jobs export." }, { status: 400 })));
     try {
       const { container } = render(<DataSection jobRetentionHours={24} hasApiKey={false} exportName="x.json" backups={backups} />);
       await user.upload(container.querySelector("input[type=file]")!, file);
-      expect(toast).toHaveBeenLastCalledWith("That file isn't a Dossier export.");
+      expect(toast).toHaveBeenLastCalledWith("That file isn't a Casefile Jobs export.");
       expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
     } finally {
       vi.unstubAllGlobals();
@@ -154,10 +154,10 @@ describe("Nightly backups (E10-7)", () => {
     expect(screen.getByRole("switch")).toHaveAccessibleDescription("Kept for 14 days in /data/backups. The first one runs tonight at 03:00.");
   });
 
-  it("says on this computer that they only run while Dossier is open (#325)", () => {
+  it("says on this computer that they only run while Casefile Jobs is open (#325)", () => {
     render(<DataSection jobRetentionHours={24} hasApiKey={false} exportName="x.json" backups={{ ...backups, onlyWhileOpen: true }} />);
     expect(screen.getByRole("switch")).toHaveAccessibleDescription(
-      "Kept for 14 days in /data/backups. Last one ran today at 03:00. On this computer, they only run while Dossier is open: a night it was closed is made up soon after you open it.",
+      "Kept for 14 days in /data/backups. Last one ran today at 03:00. On this computer, they only run while Casefile Jobs is open: a night it was closed is made up soon after you open it.",
     );
   });
 

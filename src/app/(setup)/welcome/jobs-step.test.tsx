@@ -97,7 +97,7 @@ describe("the setup guide's job search step (E22-9)", () => {
     expect(savePortalKey).toHaveBeenCalledWith({ portal: "JSEARCH", field: "key", change: { action: "set", value: "secret-key" } });
     expect(testPortal).toHaveBeenCalledWith({ portal: "JSEARCH" });
     await waitFor(() => expect(setPortalOn).toHaveBeenCalledWith({ portal: "JSEARCH", on: true }));
-    expect(within(row).getByText("It works: Dossier can search JSearch.")).toBeInTheDocument();
+    expect(within(row).getByText("It works: Casefile Jobs can search JSearch.")).toBeInTheDocument();
   });
 
   it("shows the Bundesagentur's note when it's ticked, and a free portal goes on at once", async () => {
@@ -108,7 +108,7 @@ describe("the setup guide's job search step (E22-9)", () => {
     expect(setPortalOn).not.toHaveBeenCalled();
     await user.click(screen.getByRole("checkbox", { name: /^FreeHire/ }));
     expect(setPortalOn).toHaveBeenCalledWith({ portal: "FREEHIRE", on: true });
-    await waitFor(() => expect(screen.getByText("It works: Dossier can search FreeHire.")).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText("It works: Casefile Jobs can search FreeHire.")).toBeInTheDocument());
   });
 
   it("switches every portal off for None for now", async () => {

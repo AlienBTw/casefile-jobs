@@ -55,10 +55,10 @@ describe("the daily notification check (E26-7)", () => {
 
   it("announces a new version once, while the daily update check is on", async () => {
     await saveSettings({ updateCheck: true });
-    const checkUpdate = vi.fn(async () => saveSettings({ latestVersion: "99.0.0", latestVersionUrl: "https://github.com/AienTech/dossier/releases/tag/v99.0.0" }));
+    const checkUpdate = vi.fn(async () => saveSettings({ latestVersion: "99.0.0", latestVersionUrl: "https://github.com/AlienBTw/casefile-jobs/releases/tag/v99.0.0" }));
     await runDailyCheck(evening, { checkUpdate });
     expect(checkUpdate).toHaveBeenCalled();
-    expect(sent.events).toEqual([{ name: "version.new", data: { version: "99.0.0", url: "https://github.com/AienTech/dossier/releases/tag/v99.0.0" } }]);
+    expect(sent.events).toEqual([{ name: "version.new", data: { version: "99.0.0", url: "https://github.com/AlienBTw/casefile-jobs/releases/tag/v99.0.0" } }]);
     // The next day, the same version isn't announced again.
     await runDailyCheck(new Date("2026-11-17T17:30:00Z"), { checkUpdate });
     expect(sent.events).toHaveLength(1);

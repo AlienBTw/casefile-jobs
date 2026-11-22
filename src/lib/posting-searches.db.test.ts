@@ -112,7 +112,7 @@ describe("runSearch (E22-4)", () => {
     expect(startJob).toHaveBeenCalledWith(expect.objectContaining({ type: "portal-search" }), { searchId: id, portals: ["JSEARCH"], more: false }, { key: `search:${id}` });
 
     // No job is doing it (the runner is stubbed here, as after a restart): it shows as stopped, and can be tried again.
-    expect((await loadSearch(id))!.portals).toEqual([{ id: "JSEARCH", status: "failed", found: 0, next: null, message: "Dossier stopped before it answered. Try again." }]);
+    expect((await loadSearch(id))!.portals).toEqual([{ id: "JSEARCH", status: "failed", found: 0, next: null, message: "Casefile Jobs stopped before it answered. Try again." }]);
     await prisma().postingSearch.update({ where: { id }, data: { portals: [{ id: "JSEARCH", status: "done", found: 2, next: null, message: null }] } });
     expect(await retryPortal(id, "JSEARCH")).toBe(false);
     await prisma().postingSearch.update({ where: { id }, data: { portals: [{ id: "JSEARCH", status: "failed", found: 0, next: null, message: "Down." }] } });

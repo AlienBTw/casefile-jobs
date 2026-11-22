@@ -85,7 +85,7 @@ test("won't fetch a posting from the server's own network (E7-8)", async ({ page
     await expect(fetch).toBeVisible({ timeout: 1_000 });
   }).toPass({ timeout: 15_000 });
   await fetch.click();
-  await expect(page.getByText("Dossier doesn't fetch addresses on your own network. Paste the posting instead.")).toBeVisible();
+  await expect(page.getByText("Casefile Jobs doesn't fetch addresses on your own network. Paste the posting instead.")).toBeVisible();
   await expect(page.getByLabel("Job posting")).toHaveValue("");
 });
 

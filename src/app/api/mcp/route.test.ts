@@ -84,7 +84,7 @@ describe("the Claude connector at /api/mcp (#221)", () => {
     expect((await call({ jsonrpc: "2.0", id: 1, method: "tools/list" }, "not-a-token")).status).toBe(401);
   });
 
-  it("answers MCP with Dossier's tools once signed in, and none that delete, archive or send", async () => {
+  it("answers MCP with Casefile Jobs' tools once signed in, and none that delete, archive or send", async () => {
     const token = await accessToken();
     const init = await call(
       { jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { name: "test", version: "1" } } },
@@ -100,6 +100,7 @@ describe("the Claude connector at /api/mcp (#221)", () => {
       "get_application",
       "get_posting",
       "get_profile",
+      "list_agent_candidates",
       "list_applications",
       "more_jobs",
       "save_application",
@@ -139,7 +140,7 @@ describe("the Claude connector at /api/mcp (#221)", () => {
     expect((await tool("search_jobs", { keywords: "data analyst", experience: "principal" })).isError).toBe(true);
   });
 
-  it("asks Claude to write the application itself when Dossier has no AI model", async () => {
+  it("asks Claude to write the application itself when Casefile Jobs has no AI model", async () => {
     const { isError, text } = await tool("draft_application", { posting_text: "Product designer at Acme" });
     expect(isError).toBe(true);
     expect(text).toContain("save_application");

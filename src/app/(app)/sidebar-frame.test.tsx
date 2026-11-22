@@ -33,7 +33,7 @@ afterEach(() => {
 
 function renderSidebar(initialCollapsed = false, initialApplicationCollapsed?: boolean) {
   return render(
-    <SidebarFrame initialCollapsed={initialCollapsed} initialApplicationCollapsed={initialApplicationCollapsed} brand={<span>Dossier</span>}>
+    <SidebarFrame initialCollapsed={initialCollapsed} initialApplicationCollapsed={initialApplicationCollapsed} brand={<span>Casefile Jobs</span>}>
       <NavLinks />
       <ThemeToggle />
     </SidebarFrame>,

@@ -73,7 +73,7 @@ describe("JobSearchSection", () => {
 
     rerender(<JobSearchSection key="two" initial={viewOf({ JSEARCH: { on: true }, FREEHIRE: { on: true } })} />);
     expect(screen.getAllByRole("note")).toHaveLength(2);
-    expect(screen.getByText("No key needed. Dossier searches FreeHire's public catalogue at freehire.me.")).toBeInTheDocument();
+    expect(screen.getByText("No key needed. Casefile Jobs searches FreeHire's public catalogue at freehire.me.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Test connection to JSearch" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Test connection to FreeHire" })).toBeInTheDocument();
   });
@@ -133,7 +133,7 @@ describe("JobSearchSection", () => {
 
   it("says when it searches a self-hosted FreeHire", () => {
     render(<JobSearchSection initial={viewOf({ FREEHIRE: { on: true } }, { freehire: "jobs.example.org" })} />);
-    expect(screen.getByText("No key needed. Dossier searches your own FreeHire at jobs.example.org.")).toBeInTheDocument();
+    expect(screen.getByText("No key needed. Casefile Jobs searches your own FreeHire at jobs.example.org.")).toBeInTheDocument();
   });
 
   it("shows keys from the environment and keys that can't be read", () => {
@@ -223,7 +223,7 @@ describe("Add portal (E23-3)", () => {
     await userEvent.type(screen.getByLabelText("Or a link to one"), "https://example.com/portal.json");
     await userEvent.click(screen.getByRole("button", { name: "Read it" }));
     expect(previewPortal).toHaveBeenCalledWith({ url: "https://example.com/portal.json" });
-    expect(await screen.findByText("This isn't a portal config Dossier can use:")).toBeInTheDocument();
+    expect(await screen.findByText("This isn't a portal config Casefile Jobs can use:")).toBeInTheDocument();
     expect(screen.getByText("hosts: Invalid input")).toBeInTheDocument();
   });
 

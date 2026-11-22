@@ -66,7 +66,7 @@ beforeEach(async () => {
 afterAll(() => prisma().$disconnect());
 
 describe("the portal catalog (E23-2)", () => {
-  it("leaves out an entry that doesn't fit, or whose config this Dossier can't read", () => {
+  it("leaves out an entry that doesn't fit, or whose config this Casefile Jobs install can't read", () => {
     const parsed = parseCatalog({
       portals: [entry(sample), { ...entry(sample), id: "OTHER" }, { id: "HALF" }, entry({ ...sample, id: "NEWER", format: 2 })],
       withdrawn: [{ id: "GONE", reason: "Broken.", withdrawnAt: "2026-11-16T09:00:00Z" }, { id: 1 }],
@@ -81,7 +81,7 @@ describe("the portal catalog (E23-2)", () => {
   it("is read anonymously, with its ETag, at most once a day, and kept when the backend fails", async () => {
     const { fetchImpl, requests } = backend({ portals: [entry(sample)], withdrawn: [], commit: "abc" });
     expect(await readCatalog({ now, fetchImpl, base: "https://api.example/v1", force: true })).toBe("read");
-    expect(requests[0]).toEqual({ url: "https://api.example/v1/portals", headers: { accept: "application/json", "user-agent": "Dossier" } });
+    expect(requests[0]).toEqual({ url: "https://api.example/v1/portals", headers: { accept: "application/json", "user-agent": "CasefileJobs" } });
     expect((await loadCatalog()).portals.map((portal) => portal.id)).toEqual(["SAMPLE_JSON"]);
     // Not due again for a day; Browse portals asks again, sending the ETag.
     const later = new Date(now.getTime() + 3_600_000);

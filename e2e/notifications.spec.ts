@@ -33,7 +33,7 @@ test("adds a webhook, sends a signed test, and switches events in the grid", asy
   await expect(page.getByRole("status").filter({ hasText: "Sent: check that it arrived." })).toBeVisible();
   const [post] = (await fakeWebhookPosts()).slice(-1);
   expect(post.event).toBe("test");
-  expect(JSON.parse(post.body)).toMatchObject({ event: "test", title: "A test from Dossier", text: "If you can read this, notifications to “n8n” work." });
+  expect(JSON.parse(post.body)).toMatchObject({ event: "test", title: "A test from Casefile Jobs", text: "If you can read this, notifications to “n8n” work." });
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.getByRole("button", { name: "Copy secret" }).click();
   await expect(page.getByText("Copied the signing secret.")).toBeVisible();

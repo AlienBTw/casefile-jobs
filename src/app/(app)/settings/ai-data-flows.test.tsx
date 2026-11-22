@@ -27,7 +27,7 @@ describe("AiDataFlows (E34-4)", () => {
       "Your password and keys, stays here",
       "Your applications and notes, stays here",
     ]);
-    expect(within(column).getByRole("link", { name: /Read the privacy page/ })).toHaveAttribute("href", "https://github.com/AienTech/dossier/blob/main/PRIVACY.md");
+    expect(within(column).getByRole("link", { name: /Read the privacy page/ })).toHaveAttribute("href", "https://github.com/AlienBTw/casefile-jobs/blob/main/PRIVACY.md");
 
     act(() => publishAiChoice({ provider: "LOCAL", baseUrl: "http://ollama:11434" }));
     expect(column).toHaveTextContent(/^Where your data goesNothing leaves this computer\. With Local model chosen/);

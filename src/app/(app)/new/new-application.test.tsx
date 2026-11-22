@@ -176,7 +176,7 @@ describe("the paste step (E7-1)", () => {
     expect(startReadingPosting).not.toHaveBeenCalled();
   });
 
-  it("hands the posting to a Claude chat when the connector is on and Dossier has no model (#221)", async () => {
+  it("hands the posting to a Claude chat when the connector is on and Casefile Jobs has no model (#221)", async () => {
     const tab = { closed: false, opener: {}, location: { href: "about:blank" }, close: vi.fn() };
     const open = vi.spyOn(window, "open").mockReturnValue(tab as unknown as Window);
     vi.mocked(handOffToClaude).mockResolvedValue({ ok: true, data: { url: "https://claude.ai/new?q=write" } });

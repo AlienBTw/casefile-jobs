@@ -92,7 +92,7 @@ describe("settingsStatus (E34-1)", () => {
     expect(problemsBanner(status)).toEqual({
       title: "Eight things to look at.",
       summary:
-        "Your Anthropic key can't be read, Adzuna has failed since 12 Nov, scoring can't run, the job agent's run on 16 Nov failed, Google stopped syncing, the Phone channel is paused, there's no backup from the last 3 days and Dossier 1.16.0 is out.",
+        "Your Anthropic key can't be read, Adzuna has failed since 12 Nov, scoring can't run, the job agent's run on 16 Nov failed, Google stopped syncing, the Phone channel is paused, there's no backup from the last 3 days and Casefile Jobs 1.16.0 is out.",
       fix: { label: "Enter the key", section: "ai" },
     });
   });
@@ -107,6 +107,6 @@ describe("settingsStatus (E34-1)", () => {
     expect(quota.problem?.summary).toBe("JSearch is out of searches");
     expect(settingsStatus({ ...healthy, agent: { ...healthy.agent, setupProblem: "Switch on a portal first." } }).agent).toMatchObject({ tone: "look", meta: "Switch on a portal first." });
     expect(settingsStatus({ ...healthy, data: { ...healthy.data, problem: "The disk is full." } }).data).toMatchObject({ tone: "look", note: "Backup failed" });
-    expect(problemsBanner(settingsStatus({ ...healthy, about: { ...healthy.about, update: "1.16.0" } }))).toEqual({ title: "One thing to look at.", summary: "Dossier 1.16.0 is out.", fix: { label: "See what's new", section: "about" } });
+    expect(problemsBanner(settingsStatus({ ...healthy, about: { ...healthy.about, update: "1.16.0" } }))).toEqual({ title: "One thing to look at.", summary: "Casefile Jobs 1.16.0 is out.", fix: { label: "See what's new", section: "about" } });
   });
 });

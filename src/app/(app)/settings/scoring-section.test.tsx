@@ -89,7 +89,7 @@ describe("ScoringSection (#274)", () => {
     const user = userEvent.setup();
     render(<ScoringSection initial={{ scorer: "OPENROUTER", keys: { JEV: "none", DECISIONS: "none", OPENROUTER: "set" }, openrouterModel: "openai/gpt-6-luna" }} />);
     expect(screen.getAllByRole("radio").map((radio) => radio.getAttribute("aria-label"))).toEqual(["Your AI model", "Jev by TypeSafe", "OpenAI Decisions", "OpenRouter"]);
-    expect(screen.getByRole("note")).toHaveTextContent("Dossier asks OpenRouter to use only companies that don't keep or train on it.");
+    expect(screen.getByRole("note")).toHaveTextContent("Casefile Jobs asks OpenRouter to use only companies that don't keep or train on it.");
     expect(screen.getByLabelText("OpenRouter key")).toHaveAttribute("placeholder", "Saved · type a new key to replace it");
     vi.mocked(saveOpenRouterScoringModel).mockResolvedValueOnce({ ok: true, data: { scorer: "OPENROUTER", keys: { OPENROUTER: "set" }, openrouterModel: "mistralai/mistral-small-2603" } });
     await user.type(screen.getByLabelText("Model"), "mistralai/mistral-small-2603");

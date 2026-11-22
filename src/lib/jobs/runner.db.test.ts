@@ -216,6 +216,6 @@ describe("the job runner", () => {
       ],
     });
     expect(await recoverInterruptedJobs()).toBe(2);
-    expect(await prisma().job.count({ where: { status: "FAILED", error: "Dossier restarted before this finished. Try again." } })).toBe(2);
+    expect(await prisma().job.count({ where: { status: "FAILED", error: "Casefile Jobs restarted before this finished. Try again." } })).toBe(2);
   });
 });

@@ -89,25 +89,31 @@ describe("checkDue", () => {
 });
 
 describe("checkRuns", () => {
-  it("runs in production, and elsewhere only when pointed at a backend", () => {
+  it("runs only when pointed at a backend via DOSSIER_API_URL", () => {
+    expect(checkRuns()).toBe(false);
+    vi.stubEnv("NODE_ENV", "production");
     expect(checkRuns()).toBe(false);
     config.DOSSIER_API_URL = "http://api.localhost:3000/v1";
-    expect(checkRuns()).toBe(true);
-    config.DOSSIER_API_URL = undefined;
-    vi.stubEnv("NODE_ENV", "production");
     expect(checkRuns()).toBe(true);
   });
 });
 
 describe("askBackend", () => {
+  it("does not fetch when no backend URL is configured", async () => {
+    const fetch = answer({ announcements: [] });
+    expect(await askBackend(null, fetch)).toEqual({ status: "failed" });
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
   it("sends nothing about the install", async () => {
+    config.DOSSIER_API_URL = "http://api.localhost:3000/v1";
     const fetch = answer({ announcements: [] });
     await askBackend(null, fetch);
     const [url, init] = fetch.mock.calls[0];
-    expect(url).toBe("https://api.dossier.aien.me/v1/announcements");
+    expect(url).toBe("http://api.localhost:3000/v1/announcements");
     expect(init?.method ?? "GET").toBe("GET");
     expect(init?.body).toBeUndefined();
-    expect(init?.headers).toEqual({ accept: "application/json", "user-agent": "Dossier" });
+    expect(init?.headers).toEqual({ accept: "application/json", "user-agent": "CasefileJobs" });
     expect(init?.signal).toBeInstanceOf(AbortSignal);
   });
 
@@ -116,10 +122,11 @@ describe("askBackend", () => {
     const fetch = notModified();
     await askBackend('"abc"', fetch, config.DOSSIER_API_URL);
     expect(fetch.mock.calls[0][0]).toBe("http://api.localhost:3000/v1/announcements");
-    expect(fetch.mock.calls[0][1]?.headers).toEqual({ accept: "application/json", "user-agent": "Dossier", "if-none-match": '"abc"' });
+    expect(fetch.mock.calls[0][1]?.headers).toEqual({ accept: "application/json", "user-agent": "CasefileJobs", "if-none-match": '"abc"' });
   });
 
   it("reads each kind of answer", async () => {
+    config.DOSSIER_API_URL = "http://api.localhost:3000/v1";
     expect(await askBackend(null, answer({ announcements: [notice("ann_1")] }))).toEqual({ status: "new", items: [notice("ann_1")], etag: '"new"', wait: 12 * HOUR });
     expect(await askBackend('"new"', notModified())).toEqual({ status: "same", wait: 12 * HOUR });
   });
@@ -134,11 +141,12 @@ describe("askBackend", () => {
       vi.fn(async () => Promise.reject(new TypeError("fetch failed"))),
       vi.fn(async () => Promise.reject(new DOMException("The operation timed out.", "TimeoutError"))),
     ];
-    for (const failure of failures) expect(await askBackend(null, failure)).toEqual({ status: "failed" });
+    for (const failure of failures) expect(await askBackend(null, failure, "http://api.localhost:3000/v1")).toEqual({ status: "failed" });
   });
 
   it("refuses an answer that's too big", async () => {
     const big = JSON.stringify({ announcements: [], padding: "x".repeat(1024 * 1024) });
+    config.DOSSIER_API_URL = "http://api.localhost:3000/v1";
     expect(await askBackend(null, vi.fn(async () => new Response(big)))).toEqual({ status: "failed" });
     const announced = vi.fn(async () => new Response("{}", { headers: { "content-length": String(2 * 1024 * 1024) } }));
     expect(await askBackend(null, announced)).toEqual({ status: "failed" });

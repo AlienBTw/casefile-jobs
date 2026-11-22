@@ -29,13 +29,13 @@ test("opens by itself on a fresh install and walks through every step", async ({
   await freshInstall();
   await page.goto("/");
   await expect(page).toHaveURL("/welcome");
-  await expect(page.getByRole("heading", { name: "Welcome to Dossier" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Welcome to Casefile Jobs" })).toBeVisible();
   await expect(page.getByRole("dialog", { name: "Send a daily usage ping?" })).toHaveCount(0);
   await expectAccessible(page);
 
   // AI: the e2e server's is set in the environment, so it's done already.
   await page.getByRole("link", { name: "Let's start →" }).click();
-  await expect(page.getByText(/Dossier already writes with OpenAI-compatible, using fake-model\. It's set on the server/)).toBeVisible();
+  await expect(page.getByText(/Casefile Jobs already writes with OpenAI-compatible, using fake-model\. It's set on the server/)).toBeVisible();
   await page.getByRole("button", { name: "Choose another" }).click();
   await page.getByRole("radio", { name: "Best writing" }).click();
   await expect(page.getByRole("radio", { name: "OpenAI" })).toBeChecked();
@@ -47,7 +47,7 @@ test("opens by itself on a fresh install and walks through every step", async ({
   // A model on this computer that isn't there: found nowhere, and nothing saved.
   await page.getByRole("radio", { name: "Free and private" }).click();
   await page.getByRole("button", { name: "Find LM Studio" }).click();
-  await expect(page.getByText("Dossier couldn't find LM Studio.")).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByText("Casefile Jobs couldn't find LM Studio.")).toBeVisible({ timeout: 30_000 });
   const [saved] = await sql<{ count: number }>(`SELECT count(*)::int AS count FROM "Setting" WHERE key = 'provider'`);
   expect(saved.count).toBe(0);
   await page.getByRole("link", { name: "Continue →" }).click();
@@ -58,7 +58,7 @@ test("opens by itself on a fresh install and walks through every step", async ({
   await page.getByRole("checkbox", { name: /^JSearch/ }).check();
   await page.getByLabel("JSearch API key").fill("e2e-jsearch-key");
   await page.getByRole("button", { name: "Check it" }).click();
-  await expect(page.getByText("It works: Dossier can search JSearch.")).toBeVisible();
+  await expect(page.getByText("It works: Casefile Jobs can search JSearch.")).toBeVisible();
   await page.getByRole("link", { name: "Continue →" }).click();
 
   // Scoring: your AI is the choice already; the other scoring models come with their key steps and a check (E25-8).
@@ -101,7 +101,7 @@ test("opens again from Settings, and leaving it goes back to the app for good", 
   await expect(page).toHaveURL("/");
   await page.goto("/settings?section=about");
   await page.getByRole("link", { name: "Open the setup guide" }).click();
-  await expect(page.getByRole("heading", { name: "Welcome to Dossier" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Welcome to Casefile Jobs" })).toBeVisible();
   await page.getByRole("link", { name: "Let's start →" }).click();
   await page.getByRole("navigation", { name: "Setup steps" }).getByRole("link", { name: /Scoring/ }).click();
   await expect(page.getByRole("heading", { name: "How to judge a posting" })).toBeVisible();
@@ -112,5 +112,5 @@ test("opens again from Settings, and leaving it goes back to the app for good", 
   await page.getByRole("button", { name: "Leave setup" }).click();
   await expect(page).toHaveURL("/");
   await page.goto("/welcome");
-  await expect(page.getByRole("heading", { name: "Welcome to Dossier" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Welcome to Casefile Jobs" })).toBeVisible();
 });

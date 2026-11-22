@@ -69,7 +69,7 @@ test.afterAll(async () => {
 });
 
 test("shows the most severe first, and each next one after a dismiss, for good", async ({ page }) => {
-  const link = { label: "What's new", url: "https://github.com/AienTech/dossier/releases/tag/v99.0.0" };
+  const link = { label: "What's new", url: "https://github.com/AlienBTw/casefile-jobs/releases/tag/v99.0.0" };
   const security = notice("security", { severity: "security", link, body: "First line.\nSecond line." });
   const important = notice("important", { severity: "important" });
   const info = notice("info");
@@ -114,7 +114,7 @@ test("asks with nothing about the install, and is told when nothing changed", as
   const [first, ...rest] = (await fakeAnnouncementRequests()).slice(before);
   expect(rest).toEqual([]);
   expect(first.url).toBe("/v1/announcements");
-  expect(first.headers["user-agent"]).toBe("Dossier");
+  expect(first.headers["user-agent"]).toBe("CasefileJobs");
   // Only what any HTTP client sends (the last two come with cache: "no-store"): no cookie, ID, key or version.
   const fromFetch = ["accept", "accept-encoding", "accept-language", "connection", "host", "sec-fetch-mode", "user-agent", "cache-control", "pragma"];
   expect(Object.keys(first.headers).filter((header) => !fromFetch.includes(header))).toEqual([]);
@@ -195,13 +195,13 @@ test("changes nothing while the backend is down", async ({ page }) => {
 test("floats over the page, leaving the sidebar to the update notice, and stays within reach", async ({ page, context, baseURL }) => {
   const security = notice("security", { severity: "security", body: "x".repeat(500) });
   await publish(page, security);
-  for (const [key, value] of [["latestVersion", "99.0.0"], ["latestVersionUrl", "https://github.com/AienTech/dossier/releases/tag/v99.0.0"]]) {
+  for (const [key, value] of [["latestVersion", "99.0.0"], ["latestVersionUrl", "https://github.com/AlienBTw/casefile-jobs/releases/tag/v99.0.0"]]) {
     await sql(`INSERT INTO "Setting" (key, value, "updatedAt") VALUES ($1, $2, now())`, [key, value]);
   }
 
   await page.goto("/");
   await expect(region(page, security)).toBeVisible();
-  await expect(page.locator("aside").getByRole("region", { name: "Dossier 99.0.0 is out" })).toBeVisible();
+  await expect(page.locator("aside").getByRole("region", { name: "Casefile Jobs 99.0.0 is out" })).toBeVisible();
   await expect(page.locator("aside").getByRole("region", { name: security.title })).toHaveCount(0);
   await expect(region(page, security)).toBeInViewport({ ratio: 1 });
   await expectAccessibleNotice(page);

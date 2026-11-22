@@ -151,7 +151,7 @@ test("searches FreeHire, which needs no key and has no radius", async ({ page })
   await page.goto("/settings?section=jobs");
   // Any number of portals can be on (E22-3); this one searches FreeHire alone.
   await page.getByRole("switch", { name: /^FreeHire/ }).click();
-  await expect(page.getByText("No key needed. Dossier searches FreeHire's public catalogue at freehire.me.")).toBeVisible();
+  await expect(page.getByText("No key needed. Casefile Jobs searches FreeHire's public catalogue at freehire.me.")).toBeVisible();
   await on("FREEHIRE", true);
   await page.getByRole("switch", { name: /^JSearch/ }).click();
   await on("JSEARCH", false);

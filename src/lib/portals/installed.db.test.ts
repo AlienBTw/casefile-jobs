@@ -49,12 +49,12 @@ describe("a portal added from a file or a link (E23-3)", () => {
     });
   });
 
-  it("is refused, saying what's wrong, when it isn't a config Dossier can use", () => {
+  it("is refused, saying what's wrong, when it isn't a config Casefile Jobs can use", () => {
     expect(previewConfig("{ nope")).toEqual({ ok: false, problems: ["It isn't JSON: a portal config is a .json file."] });
     const missing = previewConfig(JSON.stringify({ ...sample, hosts: undefined }));
     expect(missing.ok).toBe(false);
     expect(!missing.ok && missing.problems).toContainEqual(expect.stringMatching(/^hosts: /));
-    expect(previewConfig(JSON.stringify({ ...sample, id: "JSEARCH" }))).toEqual({ ok: false, problems: ["id: JSEARCH is a portal Dossier comes with. Give this one an id of its own."] });
+    expect(previewConfig(JSON.stringify({ ...sample, id: "JSEARCH" }))).toEqual({ ok: false, problems: ["id: JSEARCH is a portal Casefile Jobs comes with. Give this one an id of its own."] });
     expect(previewConfig(" ".repeat(210 * 1024))).toMatchObject({ ok: false, problems: [expect.stringContaining("bigger than a portal config")] });
   });
 
