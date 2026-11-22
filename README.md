@@ -13,10 +13,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/AlienBTw/casefile-jobs/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/AienTech/dossier?label=release"></a>
+  <a href="https://github.com/AlienBTw/casefile-jobs/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/AlienBTw/casefile-jobs?label=release"></a>
   <a href="https://github.com/AlienBTw/casefile-jobs/actions/workflows/image.yml"><img alt="CI" src="https://github.com/AlienBTw/casefile-jobs/actions/workflows/image.yml/badge.svg"></a>
   <a href="LICENSE"><img alt="License: AGPL-3.0" src="https://img.shields.io/badge/license-AGPL--3.0-blue"></a>
-  <a href="https://github.com/AlienBTw/casefile-jobs/pkgs/container/dossier"><img alt="Docker image: ghcr.io/alienbtw/casefile-jobs" src="https://img.shields.io/badge/image-ghcr.io%2Falienbtw%2Fcasefile--jobs-2496ED?logo=docker&logoColor=white"></a>
+  <a href="https://github.com/AlienBTw/casefile-jobs/pkgs/container/casefile-jobs"><img alt="Docker image: ghcr.io/alienbtw/casefile-jobs" src="https://img.shields.io/badge/image-ghcr.io%2Falienbtw%2Fcasefile--jobs-2496ED?logo=docker&logoColor=white"></a>
   <img alt="Next.js 16" src="https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs">
   <img alt="PostgreSQL 18" src="https://img.shields.io/badge/PostgreSQL-18-4169E1?logo=postgresql&logoColor=white">
 </p>
@@ -84,7 +84,7 @@ All you need is [Docker Desktop](https://docs.docker.com/desktop/) on macOS or W
 
 ```bash
 mkdir ~/casefile-jobs && cd ~/casefile-jobs
-curl -fsSL -o compose.yml https://raw.githubusercontent.com/AienTech/dossier/main/compose.production.yml
+curl -fsSL -o compose.yml https://raw.githubusercontent.com/AlienBTw/casefile-jobs/main/compose.production.yml
 echo "POSTGRES_PASSWORD=$(openssl rand -hex 24)" > .env
 echo "DOSSIER_SECRET=$(openssl rand -base64 32)" >> .env
 ```
