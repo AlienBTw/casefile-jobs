@@ -1,5 +1,5 @@
 // The scoring engine's six factors (E25-1, #408): what every scoring model
-// judges, and how Dossier adds the answers up. The model judges each factor;
+// judges, and how Casefile Jobs adds the answers up. The model judges each factor;
 // code only weighs the answers, applies the caps and words the breakdown.
 
 export const FACTORS = [

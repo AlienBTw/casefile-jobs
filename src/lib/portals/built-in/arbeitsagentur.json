@@ -21,7 +21,7 @@
     "text": "Source: Bundesagentur für Arbeit"
   },
   "consent": {
-    "note": "The Bundesagentur für Arbeit has no official API. Dossier searches it through the access its own job search uses, without its permission, and the BA's terms of use don't allow automated access. You choose this source on your own responsibility, and it can stop working at any time."
+    "note": "The Bundesagentur für Arbeit has no official API. Casefile Jobs searches it through the access its own job search uses, without its permission, and the BA's terms of use don't allow automated access. You choose this source on your own responsibility, and it can stop working at any time."
   },
   "postingPage": "https://www.arbeitsagentur.de/jobsuche/jobdetail/{id|url}",
   "kind": "json",

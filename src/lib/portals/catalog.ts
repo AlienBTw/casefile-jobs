@@ -20,7 +20,7 @@ import { parsePortalConfig, type PortalConfig } from "./format";
 
 type Db = Prisma.TransactionClient | typeof prisma;
 
-const API_URL = "https://api.dossier.aien.me/v1";
+const API_URL: string | undefined = undefined;
 const TIMEOUT_MS = 10_000;
 /** Far more than a full catalog, so a wrong answer can't use up the server's memory. */
 const MAX_BYTES = 5 * 1024 * 1024;
@@ -45,13 +45,13 @@ const entrySchema = z.object({
 
 const withdrawnSchema = z.object({ id: z.string(), reason: z.string(), withdrawnAt: z.string() });
 
-/** A portal in the catalog whose config this Dossier can read. */
+/** A portal in the catalog whose config this Casefile Jobs install can read. */
 export type CatalogEntry = Omit<z.infer<typeof entrySchema>, "config"> & { config: PortalConfig };
 export type WithdrawnPortal = z.infer<typeof withdrawnSchema>;
 
 /**
  * The answer's portals and withdrawals; an entry that doesn't fit, or whose
- * config this Dossier can't read (a newer format), is left out. Null when the
+ * config this Casefile Jobs install can't read (a newer format), is left out. Null when the
  * answer isn't a catalog at all.
  */
 export function parseCatalog(answer: unknown): { portals: CatalogEntry[]; withdrawn: WithdrawnPortal[]; commit: string | null } | null {
@@ -77,7 +77,7 @@ type Answer = { status: "new"; portals: unknown; withdrawn: unknown; commit: str
 async function askBackend(etag: string | null, fetchImpl: typeof fetch, base: string): Promise<Answer> {
   try {
     const response = await fetchImpl(`${base}/portals`, {
-      headers: { accept: "application/json", "user-agent": "Dossier", ...(etag ? { "if-none-match": etag } : {}) },
+      headers: { accept: "application/json", "user-agent": "CasefileJobs", ...(etag ? { "if-none-match": etag } : {}) },
       signal: AbortSignal.timeout(TIMEOUT_MS),
       cache: "no-store",
     });
@@ -109,7 +109,7 @@ type ReadOptions = { now?: Date; fetchImpl?: typeof fetch; base?: string; force?
  * so a backend that fails isn't asked on every page.
  */
 export async function readCatalog({ now = new Date(), fetchImpl = fetch, base = env.DOSSIER_API_URL ?? API_URL, force = false, db = prisma }: ReadOptions = {}): Promise<"read" | "same" | "skipped" | "failed"> {
-  if (!checkRuns() && !force) return "skipped";
+  if ((!checkRuns() && !force) || !base) return "skipped";
   // Pages loading together share one read.
   if (globalForCatalog.catalogReading) return (await globalForCatalog.catalogReading) as "read";
   const reading = (async () => {
@@ -139,7 +139,7 @@ export async function readCatalog({ now = new Date(), fetchImpl = fetch, base = 
   }
 }
 
-/** The catalog as last read: every portal this Dossier can read, and the withdrawn ones. */
+/** The catalog as last read: every portal this Casefile Jobs install can read, and the withdrawn ones. */
 export async function loadCatalog(db: Db = prisma): Promise<{ portals: CatalogEntry[]; withdrawn: WithdrawnPortal[]; readAt: Date | null }> {
   const row = await db.portalCatalog.findUnique({ where: { id: 1 } });
   const parsed = parseCatalog({ portals: row?.portals ?? [], withdrawn: row?.withdrawn ?? [], commit: row?.commit ?? null });

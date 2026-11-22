@@ -4,7 +4,7 @@ import { createHash, timingSafeEqual } from "node:crypto";
 
 import { env } from "@/lib/env";
 
-// When Dossier runs inside the desktop app, on the user's own computer. There's
+// When Casefile Jobs runs inside the desktop app, on the user's own computer. There's
 // no password then: the app starts this server with a token made for that launch
 // and signs itself in with it. Everything else about signing in stays as it is,
 // so other programs and websites reaching the port still land on the sign-in

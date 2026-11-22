@@ -44,7 +44,7 @@ const NARROW = "(max-width: 1023px)";
 
 export type PostingResultsProps = {
   today: string;
-  /** Score opens a Claude chat, which scores through the connector: it's on, and Dossier has no AI model of its own (#221). */
+  /** Score opens a Claude chat, which scores through the connector: it's on, and Casefile Jobs has no AI model of its own (#221). */
   scoreInClaude?: boolean;
   /** The library's first page through its filters (E22-5). */
   postings: ShownPosting[];
@@ -312,7 +312,7 @@ export function PostingResults(props: PostingResultsProps) {
               open={confirmingRemoveAll}
               onOpenChange={setConfirmingRemoveAll}
               title={props.total === 1 ? "Remove the posting in the Archive?" : `Remove all ${props.total} postings in the Archive?`}
-              description="They leave Dossier for good, and no search brings them back. Saved postings and applications aren't touched."
+              description="They leave Casefile Jobs for good, and no search brings them back. Saved postings and applications aren't touched."
               confirmLabel="Remove all"
               onConfirm={() => void removeAll()}
             />

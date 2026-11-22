@@ -4,7 +4,7 @@ import { countryNames } from "./countries";
 // boards return postings for every country, and say who may apply in a
 // line: "Worldwide", "USA only", "LATAM, Europe", "Berlin, Germany",
 // "San Francisco, CA". A posting is kept for a country when that line says
-// nothing Dossier recognises, says anywhere, or names the country or a
+// nothing Casefile Jobs recognises, says anywhere, or names the country or a
 // region it's in. Only a line that names places, none of them the country,
 // drops it.
 

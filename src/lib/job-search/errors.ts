@@ -19,7 +19,7 @@ export type JobSearchProblem =
   | "country"
   /** The source can't be reached, or failed on its side. */
   | "unavailable"
-  /** The source answered in a shape Dossier doesn't know: its API changed. */
+  /** The source answered in a shape Casefile Jobs doesn't know: its API changed. */
   | "changed";
 
 export class JobSearchError extends Error {
@@ -44,7 +44,7 @@ export function jobSearchError(problem: JobSearchProblem, source: string, { coun
   const keyWords = info?.keyWords ?? (source === "ADZUNA" ? "app ID and key" : "key");
   const message = {
     off: `${name} isn't offered on this server. Choose another source in Settings → Job search.`,
-    "not-accepted": `Read the note about ${name} and tick “I understand” before Dossier searches it.`,
+    "not-accepted": `Read the note about ${name} and tick “I understand” before Casefile Jobs searches it.`,
     "no-key": `Add your ${name} ${keyWords} in Settings → Job search first.`,
     key: `${name} didn't accept your key. Check it in Settings → Job search.`,
     quota: quotaPeriod
@@ -55,7 +55,7 @@ export function jobSearchError(problem: JobSearchProblem, source: string, { coun
     changed:
       source === "ARBEITSAGENTUR"
         ? "The Arbeitsagentur's job search has changed or isn't answering. Try another source in Settings → Job search."
-        : `${name} answered in a way Dossier doesn't understand; its service may have changed. Try again later.`,
+        : `${name} answered in a way Casefile Jobs doesn't understand; its service may have changed. Try again later.`,
   }[problem];
   return new JobSearchError(problem, message, detail ? `${source}: ${detail}` : undefined);
 }

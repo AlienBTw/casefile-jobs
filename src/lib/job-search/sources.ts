@@ -150,10 +150,10 @@ export function rememberInstalledPortals(portals: readonly PortalInfo[]): void {
   }
 }
 
-/** Whether a stored source id is one Dossier can still search (#269): a built-in, or a portal the user added. */
+/** Whether a stored source id is one Casefile Jobs can still search (#269): a built-in, or a portal the user added. */
 export const isJobSource = (id: string): id is JobSource => Object.hasOwn(SOURCE_INFO, id) || INSTALLED.has(id);
 
-/** Every portal Dossier has, built-ins first, by id and name: the Portal filter's choices. */
+/** Every portal Casefile Jobs has, built-ins first, by id and name: the Portal filter's choices. */
 export const knownPortals = (): { id: string; name: string }[] => [
   ...Object.entries(SOURCE_INFO).map(([id, info]) => ({ id, name: UPDATED.get(id)?.info.name ?? info.name })),
   ...[...INSTALLED.values()].map(({ plain }) => ({ id: plain.id, name: plain.name })),
@@ -194,7 +194,7 @@ export function sourceCovers(source: JobSource, country: string): boolean {
   return countries === null || countries.includes(country);
 }
 
-// The Bundesagentur für Arbeit (#223) has no official API: Dossier uses the
+// The Bundesagentur für Arbeit (#223) has no official API: Casefile Jobs uses the
 // access its own job search uses, without its permission. So it's the
 // user's own choice, after this note, and a server can turn it off
 // (DOSSIER_JOBS_ARBEITSAGENTUR=off).

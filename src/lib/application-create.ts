@@ -287,7 +287,7 @@ export type SentApplicationInput = {
 };
 
 /**
- * An application the user sent before Dossier (public #129): its details and
+ * An application the user sent before Casefile Jobs (public #129): its details and
  * where it stands, without a resume or cover letter. It's sent on `sentOn`, so
  * the board, the dashboard and follow-ups count from that day; a later status
  * is recorded as of now.

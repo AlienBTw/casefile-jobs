@@ -254,8 +254,8 @@ function PortalCard({ portal, freehireHost, apply, track }: { portal: PortalView
           {portal.id === "FREEHIRE" && (
             <p className="text-sm text-muted">
               {freehireHost === new URL(FREEHIRE_URL).host
-                ? `No key needed. Dossier searches FreeHire's public catalogue at ${freehireHost}.`
-                : `No key needed. Dossier searches your own FreeHire at ${freehireHost}.`}
+                ? `No key needed. Casefile Jobs searches FreeHire's public catalogue at ${freehireHost}.`
+                : `No key needed. Casefile Jobs searches your own FreeHire at ${freehireHost}.`}
             </p>
           )}
           {portal.id === "ARBEITSAGENTUR" && <p className="text-sm text-muted">No key needed. The job agent doesn&apos;t search this portal.</p>}

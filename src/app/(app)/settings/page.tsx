@@ -28,7 +28,7 @@ import { agentCoversOf } from "@/lib/settings";
 import { loadSettings } from "@/lib/settings-data";
 import { loadSettingsStatus } from "@/lib/settings-status-data";
 import { availableUpdate } from "@/lib/update-check";
-import { USAGE_PING_HOST, usagePingChoice } from "@/lib/usage-ping";
+import { usagePingChoice, usagePingHost } from "@/lib/usage-ping";
 
 import { AgentSection } from "./agent-section";
 import { PortalCatalog } from "./browse-portals";
@@ -228,7 +228,7 @@ async function aboutFacts(): Promise<AboutFacts> {
 /** The usage ping's switch in About (#172): the answer in effect, who gave it, and the install ID. */
 async function usagePingView(): Promise<UsagePingView> {
   const settings = await loadSettings();
-  return { host: USAGE_PING_HOST, ...usagePingChoice(settings), id: settings.usagePingId, production: process.env.NODE_ENV === "production" };
+  return { host: usagePingHost(), ...usagePingChoice(settings), id: settings.usagePingId, production: process.env.NODE_ENV === "production" };
 }
 
 /** Settings → Job search's portals, each with its update from the catalog (E23-5). */

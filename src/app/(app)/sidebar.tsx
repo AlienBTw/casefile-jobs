@@ -9,7 +9,7 @@ import type { ColorScheme } from "@/lib/ui-preferences";
 import { JumpTo } from "./jump/jump-to";
 import { NavLinks, type ApplicationsNav } from "./nav-links";
 import type { ProfilesNav } from "./sidebar-profiles";
-import { CoffeeLink, DiscordLink, RepositoryLink } from "./repository-link";
+import { RepositoryLink } from "./repository-link";
 import { SidebarFrame } from "./sidebar-frame";
 import { ThemeToggle } from "./theme-toggle";
 import { UpdateNotice } from "./update-notice";
@@ -22,8 +22,8 @@ function initials(name: string): string {
 
 /**
  * The signed-in sidebar: brand header, "+ New application", navigation, a
- * notice while a newer release is out, the theme switch, links to the
- * repository and to Buy Me a Coffee, and the account footer.
+ * notice while a newer release is out, the theme switch, link to the
+ * repository, and the account footer.
  */
 export function Sidebar({
   userName,
@@ -62,7 +62,7 @@ export function Sidebar({
       brand={
         <>
           <BrandMark className="size-[30px]" />
-          <span className="font-serif text-[22px] leading-none font-medium tracking-[-0.01em] group-data-collapsed/sidebar:hidden">Dossier</span>
+          <span className="font-serif text-[22px] leading-none font-medium tracking-[-0.01em] group-data-collapsed/sidebar:hidden">Casefile Jobs</span>
         </>
       }
     >
@@ -93,9 +93,7 @@ export function Sidebar({
 
       <div className="flex flex-col gap-0.5 border-t border-line p-2 group-data-collapsed/sidebar:px-1">
         <ThemeToggle serverScheme={colorScheme} />
-        <DiscordLink />
         <RepositoryLink />
-        <CoffeeLink />
       </div>
 
       <div className="flex items-center gap-2 border-t border-line px-4 py-3 group-data-collapsed/sidebar:flex-col group-data-collapsed/sidebar:px-1">

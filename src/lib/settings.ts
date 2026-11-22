@@ -272,7 +272,7 @@ const settingsSchema = z.object({
   googleClientSecretEnc: z.string().nullable().catch(null),
   /** Read replies from Gmail. */
   gmailRead: flag(true),
-  /** Which mail the inbox check reads: only threads Dossier knows and company domains, or every new mail. */
+  /** Which mail the inbox check reads: only threads Casefile Jobs knows and company domains, or every new mail. */
   gmailScope: z.enum(["known", "all"]).catch("known"),
   /** Minutes between inbox checks. */
   gmailInterval: z.coerce.number().int().min(5).max(120).catch(10),
@@ -314,7 +314,7 @@ const settingsSchema = z.object({
   // without a request, such as the inbox check (time-zone.ts). It belongs
   // to the install, not its data, so exports leave it out (INSTALL_SETTINGS).
   browserTimeZone: z.string().nullable().catch(null),
-  // The address the user last opened Dossier at (E26-1), for notifications'
+  // The address the user last opened Casefile Jobs at (E26-1), for notifications'
   // links when DOSSIER_PUBLIC_URL isn't set. The install's too, like the zone.
   lastOrigin: z.string().nullable().catch(null),
   // What notifications already said, so each is said once (E26-5, E26-7):

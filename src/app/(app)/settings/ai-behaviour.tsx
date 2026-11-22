@@ -78,7 +78,7 @@ export function AiBehaviour({ initial }: { initial: Behaviour }) {
       <Toggle
         className="border-t border-line py-4"
         label="Write the daily note with AI"
-        description="A short, kind note at the top of the dashboard, once a day. Nothing about you goes into it. Off, Dossier picks one of its own."
+        description="A short, kind note at the top of the dashboard, once a day. Nothing about you goes into it. Off, Casefile Jobs picks one of its own."
         checked={behaviour.dailyNoteAi}
         onCheckedChange={(dailyNoteAi) => change({ dailyNoteAi })}
       />

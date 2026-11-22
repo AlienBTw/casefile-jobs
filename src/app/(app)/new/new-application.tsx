@@ -138,7 +138,7 @@ function useLeaveGuard(active: boolean, onLeave: () => void) {
 export type NewApplicationProps = {
   /** Whether an AI provider is set up; without one, the page points to Settings. */
   aiReady: boolean;
-  /** The Claude connector is on and Dossier has no usable AI model: a Claude chat writes it instead (#221). */
+  /** The Claude connector is on and Casefile Jobs has no usable AI model: a Claude chat writes it instead (#221). */
   writeInClaude?: boolean;
   /** Offered through "Use a sample posting" before the first application. */
   samplePosting: string | null;
@@ -467,7 +467,7 @@ export function NewApplication({
               )}
               {writeInClaude && (
                 <span>
-                  Rather have Dossier write it?{" "}
+                  Rather have Casefile Jobs write it?{" "}
                   <Link href="/settings?section=ai" className={link}>
                     Choose a model
                   </Link>

@@ -7,14 +7,14 @@ import { googleUrl } from "./endpoints";
 import { isGone } from "./errors";
 import type { Interval } from "./slots";
 
-// The parts of the Calendar API Dossier uses (E15-5): free/busy for times to
+// The parts of the Calendar API Casefile Jobs uses (E15-5): free/busy for times to
 // offer, and events for interviews and the dashboard's calendar.
 
 const api = (path: string) => googleUrl("www", `/calendar/v3${path}`);
 const eventPath = (calendarId: string, eventId?: string) =>
   `/calendars/${encodeURIComponent(calendarId)}/events${eventId ? `/${encodeURIComponent(eventId)}` : ""}`;
 
-/** The private property that ties an event Dossier added to its application. */
+/** The private property that ties an event Casefile Jobs added to its application. */
 const APPLICATION_PROPERTY = "dossierApplication";
 
 /** Busy times in the calendar between `from` and `to`. */
@@ -70,7 +70,7 @@ const eventSchema = z.object({
   conferenceData: z.object({ conferenceSolution: z.object({ name: z.string().optional() }).optional() }).optional(),
 });
 
-/** An event as Dossier reads it. All-day events have dates ("2026-10-20", the end one day after the last) instead of times. */
+/** An event as Casefile Jobs reads it. All-day events have dates ("2026-10-20", the end one day after the last) instead of times. */
 export type CalendarEvent = {
   id: string;
   title: string;
@@ -81,7 +81,7 @@ export type CalendarEvent = {
   startDate: string | null;
   endDate: string | null;
   link: string;
-  /** The application of an interview Dossier added. */
+  /** The application of an interview Casefile Jobs added. */
   applicationId: string | null;
   /** Where: its location, or its video call ("Google Meet"); "" when neither (E30-6). */
   place: string;

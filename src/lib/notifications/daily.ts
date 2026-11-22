@@ -14,7 +14,7 @@ import { emit } from "./notify";
 // The daily notification check (E26-7, #422): once a day at 18:00 in the
 // user's time zone, like the agent's schedule, the events that come with a
 // date: an interview tomorrow, follow-ups due ("No news for N days", as the
-// dashboard counts them) and a new version of Dossier, which the server
+// dashboard counts them) and a new version of Casefile Jobs, which the server
 // checks for itself while "Check for updates daily" is on. A server that
 // starts after 18:00 runs it then; one that's off all evening skips the day.
 

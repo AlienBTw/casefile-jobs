@@ -199,7 +199,7 @@ export const savePortalField = action(
     if (definition.type === "list") {
       // Kept one a line, as the search reads them; a line that's neither a name nor a link is said, not dropped.
       const { entries, unread } = listEntries(typed, Number.MAX_SAFE_INTEGER);
-      if (unread.length > 0) throw new ActionError(`${unread.length === 1 ? `“${unread[0]}” isn't` : `${unread.length} lines aren't`} a name or a link Dossier can read.`);
+      if (unread.length > 0) throw new ActionError(`${unread.length === 1 ? `“${unread[0]}” isn't` : `${unread.length} lines aren't`} a name or a link Casefile Jobs can read.`);
       if (entries.length > definition.max) throw new ActionError(`${definition.label} takes up to ${definition.max}.`);
       value = entries.join("\n");
     }
@@ -284,7 +284,7 @@ export const browsePortals = action(z.object({}), async () => {
 export const installFromCatalog = action(z.object({ portal: portalId }), async ({ portal }, { toast }) => {
   const entry = (await loadCatalog()).portals.find((candidate) => candidate.id === portal);
   if (!entry) throw new ActionError("That portal isn't in the catalog any more.");
-  if (BUILT_IN_PORTALS.some((config) => config.id === portal)) throw new ActionError(`${entry.name} comes with Dossier already.`);
+  if (BUILT_IN_PORTALS.some((config) => config.id === portal)) throw new ActionError(`${entry.name} comes with Casefile Jobs already.`);
   await installPortal(entry.config, { origin: "catalog", reviewed: true });
   toast(`${entry.name} added. Switch it on to search it.`);
   revalidatePath("/", "layout");
@@ -444,7 +444,7 @@ export const startZippingPdfs = action(z.object({}), async () => {
 export const deleteEverything = action(z.object({ confirm: z.literal("DELETE") }), async () => {
   const unfinished = await prisma.job.findMany({ where: { status: { in: [JobStatus.QUEUED, JobStatus.RUNNING] } }, select: { id: true } });
   for (const job of unfinished) await cancelJob(job.id);
-  // Revokes Dossier's access at Google too (E15-1).
+  // Revokes Casefile Jobs' access at Google too (E15-1).
   await disconnectGoogle().catch(() => {});
 
   await prisma.$transaction(async (tx) => {
@@ -518,7 +518,7 @@ export const setConnector = action(z.object({ on: z.boolean() }), async ({ on })
 export const disconnectApps = action(z.object({}), async (_input, { toast }) => {
   if (!(await loadSettings()).connectorEnabledAt) throw new ActionError("The MCP connector is off already.");
   await saveSettings({ connectorEnabledAt: new Date().toISOString() });
-  toast("Every app is disconnected. Connect again from an app to use Dossier there.");
+  toast("Every app is disconnected. Connect again from an app to use Casefile Jobs there.");
   return null;
 });
 

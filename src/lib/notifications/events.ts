@@ -1,4 +1,4 @@
-// Notifications (E26-1, #416): every event Dossier reports, each one entry
+// Notifications (E26-1, #416): every event Casefile Jobs reports, each one entry
 // here. An entry says what the grid calls it, whether it's on until the user
 // says otherwise, and how it builds its message: a title, a short text, a
 // link and, for webhooks, the event's data. To add an event: add it here,
@@ -6,7 +6,7 @@
 // No message ever carries profile content, documents, posting descriptions,
 // mail content or keys.
 
-/** What a message says, whichever channel it goes to; `path` is a page of Dossier's, `url` an address elsewhere. */
+/** What a message says, whichever channel it goes to; `path` is a page of Casefile Jobs', `url` an address elsewhere. */
 export type NotificationMessage = { title: string; text: string; path: string | null; url?: string | null };
 
 /** A posting as a message names it. */
@@ -39,7 +39,7 @@ export type EventData = {
   "interview.tomorrow": { applicationId: string; title: string; company: string; time: string };
   /** Applications with no news for a while (E26-7). */
   "followup.due": { applications: { id: string; title: string; company: string; days: number }[] };
-  /** A new version of Dossier (E26-7). */
+  /** A new version of Casefile Jobs (E26-7). */
   "version.new": { version: string; url: string };
 };
 
@@ -82,7 +82,7 @@ export const EVENTS: { [N in EventName]: EventDefinition<N> } = {
     on: true,
     message: (data) => ({
       title: `${data.portal} was withdrawn`,
-      text: `${data.why} It's paused: Dossier won't search it until you look at it in Settings → Job search.`,
+      text: `${data.why} It's paused: Casefile Jobs won't search it until you look at it in Settings → Job search.`,
       path: "/settings?section=jobs",
     }),
   },
@@ -147,10 +147,10 @@ export const EVENTS: { [N in EventName]: EventDefinition<N> } = {
     }),
   },
   "version.new": {
-    label: "A new Dossier version",
+    label: "A new Casefile Jobs version",
     hint: "Once per version, while Check for updates daily is on.",
     on: false,
-    message: (data) => ({ title: `Dossier ${data.version} is out`, text: "See what's new, and how to upgrade.", path: null, url: data.url }),
+    message: (data) => ({ title: `Casefile Jobs ${data.version} is out`, text: "See what's new, and how to upgrade.", path: null, url: data.url }),
   },
 };
 
@@ -161,7 +161,7 @@ export const eventOn = (events: Readonly<Record<string, boolean>>, name: EventNa
 
 /** Send a test's message (E26-2). */
 export const testMessage = (channel: string): NotificationMessage => ({
-  title: "A test from Dossier",
+  title: "A test from Casefile Jobs",
   text: `If you can read this, notifications to “${channel}” work.`,
   path: "/settings?section=notifications",
 });

@@ -20,7 +20,7 @@ export const SCORE_POSTING_VERSION = "score-posting@3";
 
 // The AI model as a scoring model (E25-1, #408): it answers the engine's
 // questions, the same ones decision models answer, as JSON with a reason for
-// each factor. Dossier adds the answers up (src/lib/scoring/factors.ts).
+// each factor. Casefile Jobs adds the answers up (src/lib/scoring/factors.ts).
 
 const reasoned = z.object({ level: z.number(), reason: z.string() });
 const answerSchema = z.object({

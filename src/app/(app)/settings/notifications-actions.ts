@@ -30,7 +30,7 @@ export const saveNotificationChannel = action(
   async ({ id: channelId, type, name, config, secret }) => {
     const parsed = configSchemas[type].safeParse(config);
     if (!parsed.success) throw new ActionError(parsed.error.issues[0].message);
-    if (type === "WEBHOOK" && secret.action !== "keep") throw new ActionError("A webhook's secret is made by Dossier: regenerate it instead.");
+    if (type === "WEBHOOK" && secret.action !== "keep") throw new ActionError("A webhook's secret is made by Casefile Jobs: regenerate it instead.");
     return saveChannel({ id: channelId, type, name, config: parsed.data, secret });
   },
 );

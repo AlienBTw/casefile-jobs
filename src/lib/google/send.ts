@@ -100,7 +100,7 @@ export async function sendReply(emailId: string, body: string): Promise<{ applic
   const account = await loadGoogleAccount();
   if (!account) throw new GoogleError("not-connected", "Connect your Google account in Settings → Google first.");
   const email = await prisma.emailMessage.findUnique({ where: { id: emailId } });
-  if (!email) throw new GoogleError("unavailable", "That email is no longer in Dossier.");
+  if (!email) throw new GoogleError("unavailable", "That email is no longer in Casefile Jobs.");
   if (!body.trim()) throw new GoogleError("unavailable", "Write the answer first.");
   if (/\[…\]|\[\.\.\.\]/.test(body)) throw new GoogleError("unavailable", "Fill in the parts marked […] first.");
 
@@ -152,7 +152,7 @@ export async function sendApplicationMessage(applicationId: string): Promise<voi
   // Their latest mail, or else ours, in the thread.
   const thread = await prisma.emailMessage.findMany({ where: { threadId: application.emailThreadId }, orderBy: { sentAt: "desc" } });
   const latest = thread.find((email) => email.direction === EmailDirection.INCOMING) ?? thread[0];
-  if (!latest) throw new GoogleError("unavailable", "The thread isn't in Dossier yet. Check for mail in the inbox first.");
+  if (!latest) throw new GoogleError("unavailable", "The thread isn't in Casefile Jobs yet. Check for mail in the inbox first.");
   const to = latest.direction === EmailDirection.INCOMING ? (latest.fromName ? `${latest.fromName.replace(/[<>"]/g, "")} <${latest.fromAddress}>` : latest.fromAddress) : latest.toAddress;
   const subject = replySubject(latest.subject);
   const sent = await sendMail({ from: await sender(account.email), to, subject, body, inReplyTo: latest.messageId || undefined }, { threadId: application.emailThreadId });

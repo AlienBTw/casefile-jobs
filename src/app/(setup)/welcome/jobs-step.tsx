@@ -202,7 +202,7 @@ function PortalRow({ portal, freehireHost, onChange }: { portal: PortalView; fre
       )}
       <div role="status" className="text-sm empty:hidden">
         {!keyed && status.state === "checking" && <p className="text-muted">Checking…</p>}
-        {!keyed && status.state === "connected" && <p className="text-success">It works: Dossier can search {portal.name}.</p>}
+        {!keyed && status.state === "connected" && <p className="text-success">It works: Casefile Jobs can search {portal.name}.</p>}
         {!keyed && status.state === "failed" && <p className="rounded-card bg-warning-surface px-4 py-3 font-medium text-warning">{status.message}</p>}
       </div>
     </Card>
@@ -263,7 +263,7 @@ function KeyForm({ portal, onConnected }: { portal: PortalView; onConnected: () 
         </Button>
       </form>
       <div role="status" className="text-sm empty:hidden">
-        {status.state === "connected" && <p className="text-success">It works: Dossier can search {portal.name}.</p>}
+        {status.state === "connected" && <p className="text-success">It works: Casefile Jobs can search {portal.name}.</p>}
         {status.state === "failed" && <p className="rounded-card bg-warning-surface px-4 py-3 font-medium text-warning">{status.message}</p>}
       </div>
     </div>

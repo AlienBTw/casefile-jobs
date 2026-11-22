@@ -40,7 +40,7 @@ export const startReadingPosting = action(
 
 /**
  * "Write it with Claude →" (#221, the connector on and no AI model of
- * Dossier's own): keeps the posting for the connector to read and gives the
+ * Casefile Jobs' own): keeps the posting for the connector to read and gives the
  * claude.ai chat to open, where Claude writes the application on the user's
  * own Claude plan.
  */
@@ -241,7 +241,7 @@ function postingLink(value: string): string {
   throw new ActionError("The link to the posting doesn't look like a web address. Fix it or leave it empty.");
 }
 
-/** The statuses an application sent before Dossier can be added in (public #129). */
+/** The statuses an application sent before Casefile Jobs can be added in (public #129). */
 const SENT_STATUSES = [
   ApplicationStatus.SENT,
   ApplicationStatus.SCREENING,
@@ -253,7 +253,7 @@ const SENT_STATUSES = [
 ] as const;
 
 /**
- * "Already sent it?" (public #129): adds an application sent before Dossier,
+ * "Already sent it?" (public #129): adds an application sent before Casefile Jobs,
  * with no documents written, and returns its id. Nothing goes to the AI.
  */
 export const addSentApplication = action(

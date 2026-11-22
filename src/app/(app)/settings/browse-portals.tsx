@@ -203,7 +203,7 @@ function CatalogCard({ portal, onInstalled }: { portal: CatalogPortalView; onIns
         </p>
       </div>
       {portal.state === "built-in" ? (
-        <p className="text-meta text-muted">Comes with Dossier: switch it on among your portals.</p>
+        <p className="text-meta text-muted">Comes with Casefile Jobs: switch it on among your portals.</p>
       ) : portal.state === "added" ? (
         <p className="text-meta text-muted">Added{portal.installedVersion && portal.installedVersion !== portal.version ? `, version ${portal.installedVersion}: its update shows on its card` : ""}.</p>
       ) : confirming ? (

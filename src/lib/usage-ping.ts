@@ -8,16 +8,18 @@ import type { SettingsData } from "@/lib/settings";
 import { loadSettings, saveSettings } from "@/lib/settings-data";
 import { appVersion } from "@/lib/version";
 
-// The usage ping: on each day someone signed in opens a page, the server
-// sends this install's random ID and the app's version, once, so the project
-// can count the installs in use and how often they're used. Nothing else is
-// sent. It's opt-in (#172): nothing goes until the operator says yes, in the
-// question shown after sign-in or in Settings → About, or with
-// DOSSIER_TELEMETRY=on. DOSSIER_TELEMETRY wins while it's set. The receiving
-// end runs on the project's own server and isn't published with the app.
+// Upstream Dossier had an opt-in usage ping to AienTech's telemetry server.
+// Casefile Jobs sets no default telemetry receiver so installs never contact
+// external telemetry servers unless DOSSIER_USAGE_PING_TEST_URL is configured.
 
-export const USAGE_PING_HOST = "telemetry.dossier.aien.me";
-export const USAGE_PING_URL = `https://${USAGE_PING_HOST}/ping`;
+export const USAGE_PING_HOST = "";
+export const USAGE_PING_URL: string | null = null;
+
+/** The host the usage ping points at when configured (e.g. via DOSSIER_USAGE_PING_TEST_URL), else empty. */
+export function usagePingHost(): string {
+  const url = env.DOSSIER_USAGE_PING_TEST_URL ?? USAGE_PING_URL;
+  return url ? new URL(url).host : "";
+}
 
 /** The UTC day this process last checked for, so later page loads that day skip the database. */
 const globalForPing = globalThis as unknown as { usagePingDay?: string };
@@ -31,8 +33,8 @@ export const USAGE_PING_TEXT_VERSION = 1;
 
 /** Logged once at startup while the ping is on. */
 export const USAGE_PING_NOTICE =
-  `Usage ping: on each day Dossier is used, it sends ${USAGE_PING_HOST} a random install ID and its version number, once, ` +
-  "to count the installs in use. Nothing else is sent. Turn it off in Settings → About, or set DOSSIER_TELEMETRY=off.";
+  "Usage ping: on each day Casefile Jobs is used, it sends the configured telemetry endpoint a random install ID and its version number, once. " +
+  "Nothing else is sent. Turn it off in Settings → About, or set DOSSIER_TELEMETRY=off.";
 
 /** Logged once at startup while nobody has answered yet. */
 export const USAGE_PING_QUESTION_NOTICE =
@@ -53,15 +55,15 @@ export function usagePingChoice(
   return { choice: null, source: null };
 }
 
-/** Only production servers ever send it or ask; development servers and tests never do. */
-const sendsFromHere = () => process.env.NODE_ENV === "production";
+/** Only production servers with an active receiver ever send it or ask; development servers, tests, and default Casefile Jobs installs never do. */
+const sendsFromHere = () => process.env.NODE_ENV === "production" && Boolean(env.DOSSIER_USAGE_PING_TEST_URL ?? USAGE_PING_URL);
 
-/** Whether this server sends the ping: in production, after a yes. */
+/** Whether this server sends the ping: in production with a configured receiver, after a yes. */
 export function usagePingEnabled(settings: Pick<SettingsData, "usagePingChoice" | "usagePingChoiceText">): boolean {
   return sendsFromHere() && usagePingChoice(settings).choice === "on";
 }
 
-/** Whether to ask after sign-in: in production, while nobody has answered and DOSSIER_TELEMETRY isn't set. */
+/** Whether to ask after sign-in: in production with a configured receiver, while nobody has answered and DOSSIER_TELEMETRY isn't set. */
 export function askForUsagePing(settings: Pick<SettingsData, "usagePingChoice" | "usagePingChoiceText">): boolean {
   return sendsFromHere() && usagePingChoice(settings).choice === null;
 }
@@ -129,8 +131,9 @@ export async function pingIfNewDay({ now = new Date(), production = sendsFromHer
   return (await sendPing(id, fetchImpl)) ? "sent" : "failed";
 }
 
-/** One request with the ID and the version; false if it doesn't arrive. Never throws. */
+/** One request with the ID and the version; false if no receiver is configured or it doesn't arrive. Never throws. */
 export async function sendPing(id: string, fetchImpl: typeof fetch = fetch, url = env.DOSSIER_USAGE_PING_TEST_URL ?? USAGE_PING_URL): Promise<boolean> {
+  if (!url) return false;
   try {
     const response = await fetchImpl(url, {
       method: "POST",

@@ -8,7 +8,7 @@ import { isPasswordHash } from "@/lib/auth/password-hash";
 
 const SECRET_MIN_LENGTH = 32;
 const GENERATE_SECRET = "for example the output of `openssl rand -base64 32`";
-const HASH_PASSWORD = "Make one with `docker run --rm -it ghcr.io/aientech/dossier hash-password`";
+const HASH_PASSWORD = "Make one with `docker run --rm -it ghcr.io/alienbtw/casefile-jobs hash-password`";
 
 const AI_PROVIDERS = ["local", "openai", "anthropic", "mistral", "lmstudio"] as const;
 const JOB_SOURCE_NAMES = ["jsearch", "adzuna", "arbeitsagentur", "freehire", "off"] as const;
@@ -79,7 +79,7 @@ const schema = z.object({
         error: "DOSSIER_BACKUP_RETENTION_DAYS must be at least 1.",
       }),
     ),
-  // The daily usage ping (usage-ping.ts): unset, Dossier asks after
+  // The daily usage ping (usage-ping.ts): unset, it asks after
   // sign-in and sends nothing before a yes; on or off answers for good.
   DOSSIER_TELEMETRY: optional(
     z
@@ -253,7 +253,7 @@ export function checkEnvOnStartup(): void {
   } catch (error) {
     if (!(error instanceof EnvError)) throw error;
     for (const problem of error.problems) {
-      console.error(`Dossier can't start: ${problem}`);
+      console.error(`Casefile Jobs can't start: ${problem}`);
     }
     process.exit(1);
   }

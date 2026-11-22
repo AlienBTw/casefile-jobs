@@ -32,7 +32,7 @@ import {
 import { requestOrigin } from "@/lib/settings-views";
 import { rememberBrowserTimeZone, rememberOrigin, userTimeZone } from "@/lib/time-zone";
 import { checkForUpdatesDaily, updateNotice } from "@/lib/update-check";
-import { askForUsagePing, notePageLoad, USAGE_PING_HOST } from "@/lib/usage-ping";
+import { askForUsagePing, notePageLoad, usagePingHost } from "@/lib/usage-ping";
 import { appVersion } from "@/lib/version";
 
 import { AnnouncementNotice } from "./announcement-notice";
@@ -118,7 +118,7 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
       {/* A new notice starts over, once the one before was dismissed. */}
       {announcement && <AnnouncementNotice key={announcement.id} announcement={announcement} />}
       {/* Asked once, until answered (#172); nothing is sent before a yes. It waits while the setup guide is open. */}
-      {askForUsagePing(settings) && !setupInProgress(settings.setupGuide) && <UsagePingDialog host={USAGE_PING_HOST} />}
+      {askForUsagePing(settings) && !setupInProgress(settings.setupGuide) && <UsagePingDialog host={usagePingHost()} />}
     </div>
   );
 }

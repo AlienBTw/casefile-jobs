@@ -77,7 +77,7 @@ export const SCORING_MODELS: Record<Scorer, ScoringModel> = {
     },
     async test(config, timeoutMs) {
       const { model } = await askJev(
-        { state: "Dossier is checking that it can reach Jev.", questions: { check: { type: "noul", instructions: "Is this text about checking a connection?" } } },
+        { state: "Casefile Jobs is checking that it can reach Jev.", questions: { check: { type: "noul", instructions: "Is this text about checking a connection?" } } },
         { key: requireKey(config, "JEV"), timeoutMs, retryDelaysMs: [] },
       );
       return { model };
@@ -91,7 +91,7 @@ export const SCORING_MODELS: Record<Scorer, ScoringModel> = {
     },
     async test(config, timeoutMs) {
       const { model } = await askDecisions(
-        { state: "Dossier is checking that it can reach OpenAI Decisions.", questions: { check: { type: "noul", instructions: "Is this text about checking a connection?" } } },
+        { state: "Casefile Jobs is checking that it can reach OpenAI Decisions.", questions: { check: { type: "noul", instructions: "Is this text about checking a connection?" } } },
         { key: requireKey(config, "DECISIONS"), timeoutMs, retryDelaysMs: [] },
       );
       return { model };

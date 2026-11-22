@@ -11,5 +11,5 @@ export const PORTAL_SCHEMA_FILE = "src/lib/portals/portal-config.schema.json";
 
 export function portalJsonSchema(): string {
   const schema = z.toJSONSchema(portalConfigSchema, { io: "input", unrepresentable: "any" });
-  return `${JSON.stringify({ ...schema, title: "Dossier portal config" }, null, 2)}\n`;
+  return `${JSON.stringify({ ...schema, title: "Casefile Jobs portal config" }, null, 2)}\n`;
 }

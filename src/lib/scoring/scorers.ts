@@ -107,11 +107,11 @@ export const SCORER_INFO: Record<Scorer, ScorerInfo> = {
     tag: "Needs an OpenRouter key",
     usage: SCORER_USAGE[3],
     key: { label: "OpenRouter key", setting: "openrouterScoringKeyEnc", envName: null, getKey: { href: "https://openrouter.ai/settings/keys", text: "OpenRouter's keys page" } },
-    privacy: `Each posting you score goes to OpenRouter and the company behind the model you chose, ${PROFILE_SENT}. Dossier asks OpenRouter to use only companies that don't keep or train on it.`,
+    privacy: `Each posting you score goes to OpenRouter and the company behind the model you chose, ${PROFILE_SENT}. Casefile Jobs asks OpenRouter to use only companies that don't keep or train on it.`,
     testing: "Asking the model on OpenRouter for one word…",
     setup: {
       cost: "You pay OpenRouter for what each posting reads and what the model answers, at the model's price.",
-      data: `Each posting you score goes to OpenRouter and the model's company ${PROFILE_SENT}. Dossier asks it to skip companies that keep or train on it.`,
+      data: `Each posting you score goes to OpenRouter and the model's company ${PROFILE_SENT}. Casefile Jobs asks it to skip companies that keep or train on it.`,
       steps: [
         { text: "Sign in to OpenRouter and add credits.", link: { href: "https://openrouter.ai", label: "OpenRouter" } },
         { text: "Create a key, and paste it below.", link: { href: "https://openrouter.ai/settings/keys", label: "OpenRouter's keys page" } },

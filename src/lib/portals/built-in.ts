@@ -4,7 +4,7 @@ import arbeitsagentur from "./built-in/arbeitsagentur.json";
 import freehire from "./built-in/freehire.json";
 import jsearch from "./built-in/jsearch.json";
 
-// The portals that come with Dossier (E22-2, #388): JSearch, Adzuna, FreeHire
+// The portals that come with Casefile Jobs (E22-2, #388): JSearch, Adzuna, FreeHire
 // and the Bundesagentur für Arbeit, as configs in the same format as any
 // other portal, in the order Settings lists them. This is the snapshot a
 // release bundles (`yarn portals-snapshot`); the public dossier-portals

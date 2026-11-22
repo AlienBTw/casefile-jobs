@@ -12,7 +12,7 @@ import { statusInfo } from "@/lib/status";
 
 import { addSentApplication } from "./actions";
 
-// "Already sent it?" (public #129): an application sent before Dossier, added
+// "Already sent it?" (public #129): an application sent before Casefile Jobs, added
 // to keep track of it. Its details are typed in, so it needs no AI provider,
 // and no resume or cover letter is written. The posting and link from the
 // paste step go with it when they're there.
@@ -64,7 +64,7 @@ export function AlreadySent({
       <div className="flex flex-col gap-1">
         <h2 className="text-field font-medium">Add one you&apos;ve already sent</h2>
         <p className="text-meta text-muted">
-          To keep track of an application you sent before Dossier. No resume or cover letter is written, and nothing goes to the AI. The posting and link
+          To keep track of an application you sent before Casefile Jobs. No resume or cover letter is written, and nothing goes to the AI. The posting and link
           above are kept with it when you&apos;ve given them.
         </p>
       </div>

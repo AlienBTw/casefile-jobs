@@ -1,13 +1,9 @@
-// Where Dossier's releases are published, for the update check and its
+// Where Casefile Jobs' releases are published, for the update check and its
 // notice (update-check.ts, the sidebar). Safe to use in the browser.
 
-export const RELEASES_REPOSITORY = "AienTech/dossier";
-/** The repository's page, for credits and support (the sidebar). */
+export const RELEASES_REPOSITORY = "AlienBTw/casefile-jobs";
+/** The repository's page, for credits, source code (AGPL-3.0), and support. */
 export const REPOSITORY_URL = `https://github.com/${RELEASES_REPOSITORY}`;
-/** The maintainer's Buy Me a Coffee page, for donations (the sidebar). */
-export const COFFEE_URL = "https://buymeacoffee.com/aientech";
-/** The invite to Dossier's Discord server, where job seekers help each other (the sidebar). */
-export const DISCORD_URL = "https://discord.gg/4pfxADVSf9";
 /** How to update, in the wiki. */
 export const UPGRADE_GUIDE_URL = `${REPOSITORY_URL}/wiki/Upgrading`;
 

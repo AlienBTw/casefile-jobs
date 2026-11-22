@@ -79,7 +79,7 @@ const plural = (count: number, one: string, many = `${one}s`) => `${count} ${cou
 const hourOf = (hour: number) => `${String(hour).padStart(2, "0")}:00`;
 
 function aiStatus({ ai }: StatusInputs, now: Date): SectionStatus {
-  if (!ai.configured) return off("No AI provider chosen yet", "Dossier writes nothing until you choose one", "Not chosen yet");
+  if (!ai.configured) return off("No AI provider chosen yet", "Casefile Jobs writes nothing until you choose one", "Not chosen yet");
   const meta = ai.local ? "Nothing leaves this computer" : "Your profile leaves the server when it writes";
   const name = [ai.name, ai.model].filter(Boolean).join(" · ");
   if (ai.keyProblem === "missing") return look(name, "It needs its API key to write", "Key missing", { summary: `your ${ai.name} key is missing`, fix: "Add the key" });
@@ -112,7 +112,7 @@ export function portalTrouble(id: string, runs: readonly SearchRunInput[]): { ki
 
 function jobsStatus({ jobs }: StatusInputs, now: Date): SectionStatus {
   const switchedOn = jobs.portals.filter((portal) => portal.on);
-  if (switchedOn.length === 0) return off("No portal switched on", "Choose where Dossier looks for postings");
+  if (switchedOn.length === 0) return off("No portal switched on", "Choose where Casefile Jobs looks for postings");
   const problems = switchedOn.flatMap((portal) => {
     if (portal.setupProblem) return [{ portal, text: portal.setupProblem, summary: `${portal.name} needs its key`, note: `${portal.name} needs its key` }];
     const trouble = portalTrouble(portal.id, jobs.runs);
@@ -175,7 +175,7 @@ function dataStatus({ data }: StatusInputs, now: Date): SectionStatus {
 
 function aboutStatus({ about }: StatusInputs): SectionStatus {
   const meta = `${about.database} · ${plural(about.applications, "application")}`;
-  if (about.update) return look(`You have ${about.version} · ${about.update} is out`, meta, `${about.update} is out`, { summary: `Dossier ${about.update} is out`, fix: "See what's new" });
+  if (about.update) return look(`You have ${about.version} · ${about.update} is out`, meta, `${about.update} is out`, { summary: `Casefile Jobs ${about.update} is out`, fix: "See what's new" });
   return on(`You have ${about.version}, the latest`, meta, about.version);
 }
 
@@ -190,7 +190,7 @@ export function settingsStatus(inputs: StatusInputs) {
     agent: agentStatus(inputs, now),
     google: googleStatus(inputs),
     notifications: notificationsStatus(inputs),
-    connector: inputs.connector.on ? on("Use Dossier from Claude and other MCP apps", "On") : off("Use Dossier from Claude and other MCP apps", "Off"),
+    connector: inputs.connector.on ? on("Use Casefile Jobs from Claude and other MCP apps", "On") : off("Use Casefile Jobs from Claude and other MCP apps", "Off"),
     data: dataStatus(inputs, now),
     about: aboutStatus(inputs),
   } satisfies Record<string, SectionStatus>;
@@ -201,7 +201,7 @@ const NUMBERS = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "E
 
 /**
  * The overview's banner (E34-2): "Two things to look at. Your Adzuna key
- * stopped working on 12 Nov, and Dossier 1.16 is out." and the first
+ * stopped working on 12 Nov, and Casefile Jobs 1.16 is out." and the first
  * fix, or null when nothing needs a look.
  */
 export function problemsBanner(status: SettingsStatus): { title: string; summary: string; fix: { label: string; section: (typeof PROBLEM_ORDER)[number] } } | null {

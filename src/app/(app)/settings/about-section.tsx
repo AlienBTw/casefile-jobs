@@ -8,7 +8,7 @@ import { toast } from "@/components/toast";
 import { Button, buttonClassName } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Toggle } from "@/components/ui/toggle";
-import { UPGRADE_GUIDE_URL, type Release } from "@/lib/releases";
+import { REPOSITORY_URL, UPGRADE_GUIDE_URL, type Release } from "@/lib/releases";
 
 import { chooseUsagePing } from "../actions";
 import { USAGE_PING_PRIVACY_URL } from "../usage-ping-dialog";
@@ -67,12 +67,14 @@ export function AboutSection({ facts, usagePing, updates }: { facts: AboutFacts;
     });
   };
   const fromEnv = usagePing.source === "env";
-  const pingDescription = !usagePing.production
-    ? "Development servers never send it."
+  const pingDescription = !usagePing.host
+    ? "Disabled in Casefile Jobs (no telemetry receiver is configured)."
+    : !usagePing.production
+      ? "Development servers never send it."
     : fromEnv
       ? `Set with DOSSIER_TELEMETRY=${usagePing.choice} on the server, which decides while it's set. Change it there.`
       : pinging
-        ? `On. Once on each day Dossier is used, the server sends ${usagePing.host} ${usagePing.id ? `this install's ID (${usagePing.id})` : "this install's ID, made with the first ping,"} and the version number. Nothing else.`
+        ? `On. Once on each day Casefile Jobs is used, the server sends ${usagePing.host} ${usagePing.id ? `this install's ID (${usagePing.id})` : "this install's ID, made with the first ping,"} and the version number. Nothing else.`
         : answered
           ? "Off. Nothing is sent, and this install's ID is forgotten."
           : "Not answered yet, so nothing is sent.";
@@ -95,7 +97,17 @@ export function AboutSection({ facts, usagePing, updates }: { facts: AboutFacts;
 
   return (
     <>
-      <SettingsSectionIntro title="About this install">Free and open source. No accounts, no subscriptions.</SettingsSectionIntro>
+      <SettingsSectionIntro title="About this install">
+        Free software under the GNU AGPL-3.0, built on top of{" "}
+        <a href="https://github.com/AienTech/dossier" target="_blank" rel="noopener noreferrer" className={LINK}>
+          Dossier <span className="sr-only">(opens in a new tab)</span>
+        </a>
+        .{" "}
+        <a href={REPOSITORY_URL} target="_blank" rel="noopener noreferrer" className={LINK}>
+          Source code <span className="sr-only">(opens in a new tab)</span>
+        </a>
+        .
+      </SettingsSectionIntro>
       <Card padding="none" className="px-7 py-2">
         <dl>
           {facts.map(({ label, value }) => (
@@ -119,8 +131,8 @@ export function AboutSection({ facts, usagePing, updates }: { facts: AboutFacts;
         <Toggle
           label="Send the daily usage ping"
           description={pingDescription}
-          checked={usagePing.production && (fromEnv ? usagePing.choice === "on" : pinging)}
-          disabled={!usagePing.production || fromEnv}
+          checked={Boolean(usagePing.host) && usagePing.production && (fromEnv ? usagePing.choice === "on" : pinging)}
+          disabled={!usagePing.host || !usagePing.production || fromEnv}
           onCheckedChange={switchPing}
         />
       </Card>
@@ -129,8 +141,8 @@ export function AboutSection({ facts, usagePing, updates }: { facts: AboutFacts;
           label="Check for updates daily"
           description={
             daily
-              ? "Once on each day Dossier is used, the server asks GitHub for the latest release, and the sidebar says when a newer one is out."
-              : "Off. Dossier only checks when you press Check for updates."
+              ? "Once on each day Casefile Jobs is used, the server asks GitHub for the latest release, and the sidebar says when a newer one is out."
+              : "Off. Casefile Jobs only checks when you press Check for updates."
           }
           checked={daily}
           onCheckedChange={switchDaily}
@@ -161,11 +173,7 @@ export function AboutSection({ facts, usagePing, updates }: { facts: AboutFacts;
       </div>
       <p className="text-meta text-muted">Checking asks GitHub for the latest release and sends nothing about you or this install, daily or when you press it.</p>
       <p className="text-meta text-muted">
-        The usage ping only goes once you agree. It tells the Dossier project&apos;s maintainer, on the project&apos;s own server, how many installs are in use and how often. The ID is random and says nothing about you, and what&apos;s kept is deleted after a year. To have the rows already kept for this install removed sooner, note its ID, switch the ping off, and send the ID to{" "}
-        <a href="mailto:dossier.app@pm.me" className={LINK}>
-          dossier.app@pm.me
-        </a>
-        ; you get a confirmation once they&apos;re gone.{" "}
+        Casefile Jobs sends no usage ping by default. If a telemetry receiver is configured, it only sends a random install ID and the version number once you agree.{" "}
         <a href={USAGE_PING_PRIVACY_URL} target="_blank" rel="noopener noreferrer" className={LINK}>
           More in Privacy <span className="sr-only">(opens in a new tab)</span>
         </a>

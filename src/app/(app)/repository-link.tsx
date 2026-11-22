@@ -1,13 +1,13 @@
 "use client";
 
-import { ArrowUpRight, Coffee, MessagesSquare, Star, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Star, type LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/cn";
-import { COFFEE_URL, DISCORD_URL, REPOSITORY_URL } from "@/lib/releases";
+import { REPOSITORY_URL } from "@/lib/releases";
 
 import { useSidebarCollapsed } from "./sidebar-frame";
 
-/** A sidebar link that opens outside Dossier, in a new tab; icon-only with a tooltip while collapsed. */
+/** A sidebar link that opens outside Casefile Jobs, in a new tab; icon-only with a tooltip while collapsed. */
 function ExternalSidebarLink({ href, label, icon: Icon }: { href: string; label: string; icon: LucideIcon }) {
   const collapsed = useSidebarCollapsed();
   return (
@@ -29,17 +29,7 @@ function ExternalSidebarLink({ href, label, icon: Icon }: { href: string; label:
   );
 }
 
-/** The sidebar's link to Dossier's repository, for credits and support. */
+/** The sidebar's link to Casefile Jobs' repository, for credits, source code (AGPL-3.0), and support. */
 export function RepositoryLink() {
   return <ExternalSidebarLink href={REPOSITORY_URL} label="Star on GitHub" icon={Star} />;
-}
-
-/** The sidebar's link to the maintainer's Buy Me a Coffee page, for donations. */
-export function CoffeeLink() {
-  return <ExternalSidebarLink href={COFFEE_URL} label="Buy me a coffee" icon={Coffee} />;
-}
-
-/** The sidebar's invite to Dossier's Discord server. */
-export function DiscordLink() {
-  return <ExternalSidebarLink href={DISCORD_URL} label="Join us on Discord" icon={MessagesSquare} />;
 }

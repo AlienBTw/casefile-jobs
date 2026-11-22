@@ -11,7 +11,7 @@ import type { Scorer } from "./scorers";
 export { loadScoringProfile } from "./profile";
 
 // Scoring a posting against a profile (#208, #274, E25): the scoring model
-// Settings → Scoring chose answers the engine's questions, and Dossier adds
+// Settings → Scoring chose answers the engine's questions, and Casefile Jobs adds
 // the answers up with the weights and caps (factors.ts). Positions' Score,
 // New application's score and the job agent all come here.
 

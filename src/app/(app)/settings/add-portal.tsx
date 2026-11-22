@@ -81,7 +81,7 @@ export function AddPortal({ onInstalled }: { onInstalled: (view: JobSearchSettin
             Add portal
           </h3>
           <p className="text-meta text-pretty text-muted">
-            A portal config describes a job portal: where Dossier asks for postings and what it sends there. Add one from a file or a link; you&apos;ll see what it
+            A portal config describes a job portal: where Casefile Jobs asks for postings and what it sends there. Add one from a file or a link; you&apos;ll see what it
             does before it&apos;s added.
           </p>
         </div>
@@ -107,7 +107,7 @@ export function AddPortal({ onInstalled }: { onInstalled: (view: JobSearchSettin
         <div role="status" className="empty:hidden">
           {read?.status === "refused" && (
             <div className="rounded-card bg-warning-surface px-4 py-3 text-meta text-warning">
-              <p className="font-medium">This isn&apos;t a portal config Dossier can use:</p>
+              <p className="font-medium">This isn&apos;t a portal config Casefile Jobs can use:</p>
               <ul className="mt-1 list-disc pl-5">
                 {read.problems.slice(0, 8).map((problem) => (
                   <li key={problem}>{problem}</li>

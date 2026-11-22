@@ -62,7 +62,7 @@ export function ScoringSection({ initial }: { initial: ScoringView }) {
     <>
       <SettingsSectionIntro title="Scoring">
         Which model judges how well a posting fits a profile, for Score in Positions, New application and the job agent. Every model answers the same questions,
-        and Dossier adds the answers up the same way. Drafts are always written by your AI model.
+        and Casefile Jobs adds the answers up the same way. Drafts are always written by your AI model.
       </SettingsSectionIntro>
 
       <RadioGroup.Root

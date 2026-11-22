@@ -43,7 +43,7 @@ export function NotificationsSection({ initial }: { initial: NotificationsView }
   return (
     <>
       <SettingsSectionIntro title="Notifications">
-        Dossier tells you when something happens, such as the job agent finishing a run, by email, a webhook or ntfy. Messages never carry your profile, documents, postings&apos; text or mail.
+        Casefile Jobs tells you when something happens, such as the job agent finishing a run, by email, a webhook or ntfy. Messages never carry your profile, documents, postings&apos; text or mail.
       </SettingsSectionIntro>
 
       <section aria-labelledby="channels-heading" className="flex flex-col gap-3">
@@ -162,7 +162,7 @@ function ChannelForm({ channel, onSaved, onCancel }: { channel: ChannelView | nu
             <Input label="SMTP server" placeholder="smtp.example.com" value={draft.host} onChange={(event) => patch({ host: event.target.value })} />
             <Input label="Port" inputMode="numeric" hint="587 for STARTTLS, 465 for TLS." value={draft.port} onChange={(event) => patch({ port: event.target.value })} />
             <Input label="User" autoComplete="off" value={draft.user} onChange={(event) => patch({ user: event.target.value })} />
-            <Input label="From" type="email" placeholder="dossier@example.com" value={draft.from} onChange={(event) => patch({ from: event.target.value })} />
+            <Input label="From" type="email" placeholder="casefile@example.com" value={draft.from} onChange={(event) => patch({ from: event.target.value })} />
             <Input label="To" type="email" placeholder="you@example.com" value={draft.to} onChange={(event) => patch({ to: event.target.value })} />
           </div>
         )}

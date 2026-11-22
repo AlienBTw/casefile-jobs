@@ -12,7 +12,7 @@ const BUILT_INS = ["jsearch", "adzuna", "freehire", "arbeitsagentur"];
 async function snapshot() {
   for (const folder of BUILT_INS) {
     const url = `https://raw.githubusercontent.com/${REPOSITORY}/main/portals/${folder}/portal.json`;
-    const response = await fetch(url, { headers: { "user-agent": "Dossier" } });
+    const response = await fetch(url, { headers: { "user-agent": "CasefileJobs" } });
     if (!response.ok) throw new Error(`${url}: HTTP ${response.status}`);
     const text = await response.text();
     const parsed = parsePortalConfig(JSON.parse(text));

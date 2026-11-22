@@ -53,7 +53,7 @@ export type StartupsScreenProps = {
  * startups' job posts and Hacker News' "Who is hiring?", ranked against the
  * profile, on the list pattern: where they come from, tabs for where they
  * stand (PL1), filters as chips, the list and a preview. Rows have no ring:
- * the startup's own score only sorts them (U1). Dossier sends nothing: the
+ * the startup's own score only sorts them (U1). Casefile Jobs sends nothing: the
  * user writes to each one.
  */
 export function StartupsScreen({ filter, list, lastRefresh, refreshJobId, city, country, headline, aiReady, today, profileNames = {} }: StartupsScreenProps) {
@@ -116,7 +116,7 @@ export function StartupsScreen({ filter, list, lastRefresh, refreshJobId, city, 
         {!lastRefresh && !refreshing && (
           <div role="note" className="flex max-w-[760px] flex-col gap-2 text-sm text-pretty text-muted">
             <p>
-              Press <strong className="text-ink">Refresh</strong> to look for startups. Dossier reads YC startups&apos; job posts and this month&apos;s “Who is hiring?”
+              Press <strong className="text-ink">Refresh</strong> to look for startups. Casefile Jobs reads YC startups&apos; job posts and this month&apos;s “Who is hiring?”
               thread on Hacker News, keeps the ones that hire where you live or remotely, and looks on the best matches&apos; own sites for the address they publish
               for applications, following their robots.txt.
             </p>
@@ -501,7 +501,7 @@ function StartupPreview({
         open={removing}
         onOpenChange={setRemoving}
         title={`Remove ${startup.company} for good?`}
-        description="Dossier deletes what it keeps about this startup, its addresses and your notes, and refreshes leave it out from now on. An application you started stays."
+        description="Casefile Jobs deletes what it keeps about this startup, its addresses and your notes, and refreshes leave it out from now on. An application you started stays."
         confirmLabel="Remove for good"
         onConfirm={() => void remove()}
       />

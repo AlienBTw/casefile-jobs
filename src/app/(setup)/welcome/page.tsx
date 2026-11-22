@@ -31,7 +31,7 @@ import { JobsStep } from "./jobs-step";
 import { ScoringStep } from "./scoring-step";
 import { SetupFrame } from "./setup-frame";
 
-export const metadata: Metadata = { title: "Set up Dossier" };
+export const metadata: Metadata = { title: "Set up Casefile Jobs" };
 
 /** The setup guide (E21); the step is in `?step=`, else where it was left. */
 export default async function WelcomePage({ searchParams }: PageProps<"/welcome">) {
@@ -44,7 +44,7 @@ export default async function WelcomePage({ searchParams }: PageProps<"/welcome"
     return (
       <SetupFrame
         step="start"
-        title="Welcome to Dossier"
+        title="Welcome to Casefile Jobs"
         complete
         lead={
           <>
@@ -181,7 +181,7 @@ export default async function WelcomePage({ searchParams }: PageProps<"/welcome"
         step="google"
         title="Gmail and Calendar"
         complete={connection.status === "connected"}
-        lead="Optional, and the longest step. With your Google account connected, Dossier sends applications from your Gmail, links employers' replies to them, drafts your answers and offers times you're free. It takes a few pages in Google Cloud, done once."
+        lead="Optional, and the longest step. With your Google account connected, Casefile Jobs sends applications from your Gmail, links employers' replies to them, drafts your answers and offers times you're free. It takes a few pages in Google Cloud, done once."
       >
         <GoogleStep
           connection={connection}
@@ -203,7 +203,7 @@ export default async function WelcomePage({ searchParams }: PageProps<"/welcome"
       lead={
         name.trim()
           ? "Your profile already has your name. Importing a resume adds to it or replaces it: you choose once you've seen what was found."
-          : "Everything Dossier writes is built from your profile: your roles, skills and education. Start it from a resume you already have, or skip this step and fill it in yourself."
+          : "Everything Casefile Jobs writes is built from your profile: your roles, skills and education. Start it from a resume you already have, or skip this step and fill it in yourself."
       }
     >
       <ProfileImport

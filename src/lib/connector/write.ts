@@ -20,8 +20,8 @@ import { TONES } from "@/lib/tones";
 
 // An application written in Claude chat and saved through the connector
 // (#221, save_application): Claude reads the profile and the posting, writes
-// the tailored resume and cover letter itself, and Dossier keeps them as a
-// Draft application, as if it had written them. So Dossier needs no AI model
+// the tailored resume and cover letter itself, and Casefile Jobs keeps them as a
+// Draft application, as if it had written them. So Casefile Jobs needs no AI model
 // of its own for this. The parts are checked like the AI's: roles, projects
 // and degrees must be the profile's, skills its own skills, certifications,
 // publications and custom sections come from the profile word for word, and with "Never invent experience" on,
@@ -29,7 +29,7 @@ import { TONES } from "@/lib/tones";
 // A Draft saved this way can be revised the same way (public issue 116,
 // update_application), rather than saved again as a second application.
 
-/** Shown as what wrote the documents, where Dossier would show a prompt version. */
+/** Shown as what wrote the documents, where Casefile Jobs would show a prompt version. */
 export const WRITTEN_IN_CLAUDE = "claude-chat";
 
 export const writtenResumeSchema = z.object({
@@ -215,8 +215,8 @@ export async function reviseWrittenApplication(
   if (!application) return { error: "That application no longer exists." };
   if (application.status !== ApplicationStatus.DRAFT) return { error: "Only a Draft can be changed: this application was sent, and keeps what it was sent with." };
   const has = (kind: DocumentKind) => application.documents.some((document) => document.kind === kind);
-  if (revision.resume && !has(DocumentKind.RESUME)) return { error: "This application has no tailored resume. The user can write one from the application in Dossier." };
-  if (revision.letter && !has(DocumentKind.COVER_LETTER)) return { error: "This application has no cover letter. The user can write one from the application in Dossier." };
+  if (revision.resume && !has(DocumentKind.RESUME)) return { error: "This application has no tailored resume. The user can write one from the application in Casefile Jobs." };
+  if (revision.letter && !has(DocumentKind.COVER_LETTER)) return { error: "This application has no cover letter. The user can write one from the application in Casefile Jobs." };
 
   // The application's own profile (E24), with its own sections when it has them, or its base resume's (#297).
   const [fullProfile, settings, own, facts] = await Promise.all([

@@ -41,7 +41,7 @@ let known: InstalledPortal[] = [];
 /**
  * Every installed portal, in the order they were added, and made known to
  * the rest of the server. A stored config that no longer reads (a newer
- * Dossier changed the format) is left out, logged. One with a built-in's id
+ * Casefile Jobs changed the format) is left out, logged. One with a built-in's id
  * is an update of it from the catalog (E23-5), kept only while it's newer
  * than the one this release bundles.
  */
@@ -117,7 +117,7 @@ export function previewConfig(text: string): { ok: true; config: PortalConfig; p
   const parsed = parsePortalConfig(json);
   if (!parsed.ok) return parsed;
   const { config } = parsed;
-  if (builtInPortal(config.id)) return { ok: false, problems: [`id: ${config.id} is a portal Dossier comes with. Give this one an id of its own.`] };
+  if (builtInPortal(config.id)) return { ok: false, problems: [`id: ${config.id} is a portal Casefile Jobs comes with. Give this one an id of its own.`] };
   return {
     ok: true,
     config,
@@ -149,7 +149,7 @@ export async function fetchConfigText(link: string): Promise<{ ok: true; text: s
   if (!url || url.protocol !== "https:") return { ok: false, problem: "Use an https:// link to the config file." };
   // The lookup isn't asked about addresses typed as IPs, or localhost.
   const host = url.hostname.replace(/^\[|\]$/g, "");
-  if ((isIP(host) && !isPublicAddress(host)) || /(^|\.)localhost\.?$/i.test(host)) return { ok: false, problem: "Dossier doesn't read links on your own network." };
+  if ((isIP(host) && !isPublicAddress(host)) || /(^|\.)localhost\.?$/i.test(host)) return { ok: false, problem: "Casefile Jobs doesn't read links on your own network." };
   try {
     const response = (await undiciFetch(url, {
       headers: { accept: "application/json, text/plain;q=0.9" },
@@ -162,6 +162,6 @@ export async function fetchConfigText(link: string): Promise<{ ok: true; text: s
     return { ok: true, text };
   } catch (error) {
     const code = (error as { cause?: { code?: string } }).cause?.code;
-    return { ok: false, problem: code === "EPRIVATE" ? "Dossier doesn't read links on your own network." : "The link couldn't be read. Check it and try again." };
+    return { ok: false, problem: code === "EPRIVATE" ? "Casefile Jobs doesn't read links on your own network." : "The link couldn't be read. Check it and try again." };
   }
 }

@@ -17,7 +17,7 @@ import { EVENTS, eventOn, testMessage, type EventData, type EventName, type Noti
 import { SendError, sendMessage, type OutgoingMessage } from "./send";
 
 // Delivering notifications (E26-1, #416). Code that sees an event calls
-// emit(<name>, data): Dossier builds the message once, finds the channels
+// emit(<name>, data): Casefile Jobs builds the message once, finds the channels
 // that want it and queues one delivery each in the job runner, beside the
 // AI jobs, so a slow or unreachable target never holds anything up. A failed
 // delivery is tried 3 more times, after 1, 5 and 30 minutes, then marked

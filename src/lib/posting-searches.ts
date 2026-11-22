@@ -192,9 +192,9 @@ export async function showMoreFor(id: string, { wait = false }: { wait?: boolean
   return { ok: true, postings: await withStates(after.filter((posting) => !before.has(postingKey(posting)))), next: left.find((portal) => portal.next)?.next ?? null };
 }
 
-/** A portal still waiting or searching without a job to do it (Dossier restarted meanwhile): it failed. */
+/** A portal still waiting or searching without a job to do it (Casefile Jobs restarted meanwhile): it failed. */
 function stopped(portal: SearchPortal): SearchPortal {
-  return portal.status === "waiting" || portal.status === "searching" ? { ...portal, status: "failed", message: "Dossier stopped before it answered. Try again." } : portal;
+  return portal.status === "waiting" || portal.status === "searching" ? { ...portal, status: "failed", message: "Casefile Jobs stopped before it answered. Try again." } : portal;
 }
 
 /** "Try again" on one portal that failed, or that a restart left waiting: asked again, in the background. */

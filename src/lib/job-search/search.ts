@@ -14,7 +14,7 @@ export { isJobSource } from "./sources";
 // In this code "job" already means a background task (src/lib/jobs), so a
 // job ad is a "posting".
 
-/** The job sources Dossier can search (E14-1 to E14-3, FreeHire), in the order Settings lists them; one is chosen there. */
+/** The job sources Casefile Jobs can search (E14-1 to E14-3, FreeHire), in the order Settings lists them; one is chosen there. */
 /** The built-in portals' ids. */
 export const JOB_SOURCES = ["JSEARCH", "ADZUNA", "FREEHIRE", "ARBEITSAGENTUR"] as const;
 /** A portal's id: a built-in's, or one the user added (E23-3). */

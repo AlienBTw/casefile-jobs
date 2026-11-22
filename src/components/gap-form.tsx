@@ -43,7 +43,7 @@ export function GapForm({
       }}
       className={cn("flex flex-col gap-3 border-t border-line pt-3", className)}
     >
-      <p className="text-meta text-muted">Only add it if it&apos;s true. Dossier will use it from here on.</p>
+      <p className="text-meta text-muted">Only add it if it&apos;s true. Casefile Jobs will use it from here on.</p>
       <Select label="Where you used it" value={role} onChange={(event) => setRole(event.target.value)} autoFocus>
         {roles.map((entry) => (
           <option key={entry.id} value={entry.id}>

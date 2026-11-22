@@ -157,7 +157,7 @@ export const restorePosting = action(postingRef.extend({ saved: z.boolean() }), 
 /**
  * "Score" (#208, E25-5): how well a posting fits one profile, or all of
  * them, in the background; a scoring under way is followed, not started
- * again. With the Claude connector on and no AI model of Dossier's own, a
+ * again. With the Claude connector on and no AI model of Casefile Jobs' own, a
  * Claude chat scores it instead (#221), unless Settings → Scoring chose another scoring model.
  */
 export const startScoringPosting = action(

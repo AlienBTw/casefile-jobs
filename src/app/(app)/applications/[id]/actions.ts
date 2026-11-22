@@ -207,7 +207,7 @@ export const setApplicationTheme = action(z.object({ id: z.string().min(1), them
 /**
  * The next interview's date and time (E9-9), or null to remove it. It shows
  * on the dashboard's Needs you while the application is in Interview,
- * and while Dossier keeps interviews in Google Calendar, the event is added,
+ * and while Casefile Jobs keeps interviews in Google Calendar, the event is added,
  * moved or deleted to match.
  */
 export const setInterviewDate = action(

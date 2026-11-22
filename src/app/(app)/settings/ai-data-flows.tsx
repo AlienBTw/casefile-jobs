@@ -8,7 +8,7 @@ import { cn } from "@/lib/cn";
 import { isPrivateAddress } from "@/lib/private-host";
 
 /** PRIVACY.md, which says all of this at length. */
-const PRIVACY_URL = "https://github.com/AienTech/dossier/blob/main/PRIVACY.md";
+const PRIVACY_URL = "https://github.com/AlienBTw/casefile-jobs/blob/main/PRIVACY.md";
 
 type AiChoice = { provider: AiProvider; baseUrl: string };
 
@@ -51,7 +51,7 @@ function flowsFor(provider: AiProvider, baseUrl: string): { lead: string; flows:
   if (where !== "hosted") {
     const place = where === "computer" ? "this computer" : "your network";
     return {
-      lead: `Nothing leaves ${place}. With ${option.name} chosen, Dossier's AI runs on your own hardware.`,
+      lead: `Nothing leaves ${place}. With ${option.name} chosen, Casefile Jobs' AI runs on your own hardware.`,
       flows: [{ title: "Your profile and the posting", text: `Sent to ${option.name} on ${place} when it tailors a resume or letter, or answers a reply.`, leaves: false }, ...stays],
     };
   }
@@ -59,7 +59,7 @@ function flowsFor(provider: AiProvider, baseUrl: string): { lead: string; flows:
   return {
     lead: option.vendor
       ? `With ${option.vendor} chosen, here's what leaves this server, and when. How long it's kept depends on your account with ${option.vendor}.`
-      : "With this server chosen, here's what leaves Dossier's, and when. How long it's kept is up to whoever runs it.",
+      : "With this server chosen, here's what leaves Casefile Jobs', and when. How long it's kept is up to whoever runs it.",
     flows: [
       { title: "Your profile and the posting", text: `Sent to ${to} when it tailors a resume or letter, or answers a reply. Your contact details stay here; the notes on an application are never sent.`, leaves: true },
       { title: "Postings, for scoring", text: "Sent when a posting is scored, by you or the job agent, to the scoring model in Settings → Scoring.", leaves: true },

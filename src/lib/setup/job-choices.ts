@@ -27,7 +27,7 @@ export const PORTAL_GUIDES: Readonly<Record<string, PortalGuide>> = {
     steps: [],
   },
   ADZUNA: {
-    about: "Adzuna's own job index in 19 countries. It shares the start of each posting, and Dossier reads the rest from the posting's page.",
+    about: "Adzuna's own job index in 19 countries. It shares the start of each posting, and Casefile Jobs reads the rest from the posting's page.",
     cost: "A free key, with no card. Your account shows how many searches it allows.",
     steps: [
       {

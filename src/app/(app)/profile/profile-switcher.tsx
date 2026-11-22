@@ -162,7 +162,7 @@ export function NewProfileDialog({
             ? "Only the shared basics, languages and facts about me. You fill in the rest."
             : start === "copy"
               ? "Everything in the profile you pick, its levels too, which you can then change without touching the other."
-              : "You choose the file next; Dossier reads it into the new profile, guesses its levels, and you check what it found before anything is saved."}
+              : "You choose the file next; Casefile Jobs reads it into the new profile, guesses its levels, and you check what it found before anything is saved."}
         </p>
       </div>
       {start === "empty" && (

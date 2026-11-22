@@ -52,7 +52,7 @@ export function PasteStep({
   profiles: readonly { id: string; name: string }[];
   profileId: string | undefined;
   onProfile: (id: string) => void;
-  /** *Read the posting*, or *Write it with Claude* without a model of Dossier's own. */
+  /** *Read the posting*, or *Write it with Claude* without a model of Casefile Jobs' own. */
   action: ReactNode;
   /** The text links under the box. */
   links: ReactNode;
