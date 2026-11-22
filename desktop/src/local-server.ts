@@ -6,7 +6,7 @@ import path from "node:path";
 
 import { loadLocalSecrets } from "./local-secrets";
 
-// "On this computer": Dossier's own server, on a plain Node binary next to
+// "On this computer": Casefile Jobs' own server, on a plain Node binary next to
 // Electron, as in the Docker image. Nothing native is built for Electron, so an
 // Electron update, which is how Chromium's security fixes arrive, can't be held
 // back by it. The server listens on this computer only.

@@ -1,4 +1,4 @@
-/* Dossier's website. The colours and type follow the app (src/app/globals.css):
+/* Casefile Jobs' website. The colours and type follow the app (src/app/globals.css):
    warm paper, ink, Newsreader for titles and Geist for the rest. */
 
 @font-face {
@@ -413,18 +413,7 @@ h3 {
   }
   .nav__github .count { display: none; }
 }
-/* On the narrowest phones, Discord alone. */
-@media (max-width: 379px) {
-  .nav__github { display: none; }
-  .nav__discord-join {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-}
+/* Keep compact GitHub link visible on narrow screens. */
 
 /* Hero */
 
@@ -1086,7 +1075,7 @@ h3 {
   .chip { display: none; }
 }
 
-/* Community: the second dark band, with some of the Discord server's channels */
+/* Community / Open source: the second dark band */
 
 .community__actions { margin-top: 34px; }
 .community__note {

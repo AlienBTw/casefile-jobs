@@ -1,11 +1,11 @@
 {
-  "name": "dossier-desktop",
-  "productName": "Dossier",
-  "desktopName": "dossier-desktop.desktop",
+  "name": "casefile-jobs-desktop",
+  "productName": "Casefile Jobs",
+  "desktopName": "casefile-jobs-desktop.desktop",
   "version": "1.15.0",
   "private": true,
   "license": "AGPL-3.0-only",
-  "description": "Dossier as a desktop app",
+  "description": "Casefile Jobs as a desktop app",
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc && node scripts/copy-assets.mjs",
@@ -27,8 +27,14 @@
   },
   "packageManager": "yarn@4.18.1",
   "author": {
-    "name": "Dossier",
-    "email": "dossier.app@pm.me"
+    "name": "Dossier (AienTech)",
+    "url": "https://github.com/AienTech/dossier"
   },
-  "homepage": "https://dossier.aien.me"
+  "homepage": "https://github.com/AlienBTw/casefile-jobs",
+  "contributors": [
+    {
+      "name": "Ahmed Louay Araour (AlienBTw)",
+      "url": "https://github.com/AlienBTw"
+    }
+  ]
 }

@@ -40,6 +40,6 @@ export function loadLocalSecrets(file: string): LocalSecrets {
     return secrets;
   }
   const saved = JSON.parse(text) as Partial<LocalSecrets>;
-  if (!isUsable(saved)) throw new Error(`${file} isn't what Dossier saved. Restore it from a backup, or remove it to start over, which loses saved keys.`);
+  if (!isUsable(saved)) throw new Error(`${file} isn't what Casefile Jobs saved. Restore it from a backup, or remove it to start over, which loses saved keys.`);
   return saved;
 }

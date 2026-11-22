@@ -11,13 +11,11 @@ import { startPrintService, type PrintService } from "./print-service";
 import { googleConnectPath, mayOpenExternally, navigationFor, permissionAllowed, redirectAllowed } from "./window-rules";
 
 // The desktop app: one window with the app's own top bar, and below it either
-// its start screen or Dossier, from the user's server or from a server the app
-// starts on this computer. Dossier is the same either way, as a web page in a view.
+// its start screen or Casefile Jobs, from the user's server or from a server the app
+// starts on this computer. Casefile Jobs is the same either way, as a web page in a view.
 
-const RELEASES_URL = "https://github.com/AienTech/dossier/releases/latest";
-const REPOSITORY_URL = "https://github.com/AienTech/dossier";
-const COFFEE_URL = "https://buymeacoffee.com/aientech";
-const DISCORD_URL = "https://discord.gg/4pfxADVSf9";
+const RELEASES_URL = "https://github.com/AlienBTw/casefile-jobs/releases/latest";
+const REPOSITORY_URL = "https://github.com/AlienBTw/casefile-jobs";
 const SERVER_SESSION = "persist:dossier";
 /** Added to the user agent, so a sign-in from this window keeps its session across launches (#359; isDesktopClient in src/lib/desktop-client.ts). */
 const DESKTOP_CLIENT = "DossierDesktop";
@@ -120,7 +118,7 @@ function showStart(screen: StartScreen) {
   void view.webContents.loadFile(START_PAGE);
 }
 
-/** Shows Dossier from this address. With a token, it's the server on this computer, which the app signs in to by itself. */
+/** Shows Casefile Jobs from this address. With a token, it's the server on this computer, which the app signs in to by itself. */
 function showServer(origin: string, signInToken?: string) {
   const view = new WebContentsView({
     webPreferences: {
@@ -218,7 +216,7 @@ async function openLocal() {
     }
     showServer(local.origin, local.token);
   } catch (error) {
-    const problem: LocalProblem = error instanceof LocalServerError ? error.problem : { kind: "failed", detail: error instanceof Error ? error.message : "Dossier couldn't start.", log: logFile() };
+    const problem: LocalProblem = error instanceof LocalServerError ? error.problem : { kind: "failed", detail: error instanceof Error ? error.message : "Casefile Jobs couldn't start.", log: logFile() };
     showStart({ screen: "local-problem", ...problem });
   }
 }
@@ -228,7 +226,7 @@ function stopLocal() {
   local = null;
 }
 
-/** Only what's asked for is allowed in the sessions that show Dossier, and the bar follows its light/dark switch. */
+/** Only what's asked for is allowed in the sessions that show Casefile Jobs, and the bar follows its light/dark switch. */
 function prepareSessions() {
   for (const partition of [SERVER_SESSION, LOCAL_SESSION]) {
     const serverSession = session.fromPartition(partition);
@@ -352,9 +350,7 @@ function buildMenu() {
           ? [{ label: "Sign in my browser", click: () => void (local ? openSignedIn(local.origin, local.token, "/") : undefined) }, { type: "separator" as const }]
           : []),
         { label: "Download the latest version", click: () => void shell.openExternal(RELEASES_URL) },
-        { label: "Dossier on GitHub", click: () => void shell.openExternal(REPOSITORY_URL) },
-        { label: "Dossier on Discord", click: () => void shell.openExternal(DISCORD_URL) },
-        { label: "Buy me a coffee", click: () => void shell.openExternal(COFFEE_URL) },
+        { label: "Casefile Jobs on GitHub", click: () => void shell.openExternal(REPOSITORY_URL) },
         { type: "separator" },
         { role: "about" },
       ],
@@ -371,7 +367,7 @@ function createWindow() {
     minWidth: 480,
     minHeight: 480,
     show: false,
-    title: "Dossier",
+    title: "Casefile Jobs",
     icon: ICON,
     backgroundColor: colors.background,
     autoHideMenuBar: true,
@@ -402,7 +398,7 @@ function createWindow() {
 
 function start() {
   preferences = readPreferences(preferencesFile());
-  app.setAboutPanelOptions({ applicationName: "Dossier", applicationVersion: app.getVersion(), copyright: "Free software under the AGPL-3.0", website: REPOSITORY_URL, iconPath: ICON });
+  app.setAboutPanelOptions({ applicationName: "Casefile Jobs", applicationVersion: app.getVersion(), copyright: "Free software under the AGPL-3.0", website: REPOSITORY_URL, iconPath: ICON });
   prepareSessions();
   registerCalls();
   buildMenu();
@@ -413,9 +409,9 @@ function start() {
   else showStart({ screen: "choose" });
 }
 
-app.setName("Dossier");
+app.setName("Casefile Jobs");
 // %LOCALAPPDATA%, not Roaming: a database doesn't belong in a folder that follows a person between computers.
-if (process.platform === "win32" && process.env.LOCALAPPDATA) app.setPath("userData", path.join(process.env.LOCALAPPDATA, "Dossier"));
+if (process.platform === "win32" && process.env.LOCALAPPDATA) app.setPath("userData", path.join(process.env.LOCALAPPDATA, "Casefile Jobs"));
 
 // One app at a time: a second launch brings the running one forward.
 if (app.requestSingleInstanceLock()) {

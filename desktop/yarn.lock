@@ -628,6 +628,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"casefile-jobs-desktop@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "casefile-jobs-desktop@workspace:."
+  dependencies:
+    "@types/node": "npm:^24"
+    electron: "npm:45.3.3"
+    electron-builder: "npm:^26"
+    typescript: "npm:^5"
+  dependenciesMeta:
+    electron:
+      built: true
+  languageName: unknown
+  linkType: soft
+
 "chalk@npm:^4.1.1, chalk@npm:^4.1.2":
   version: 4.1.2
   resolution: "chalk@npm:4.1.2"
@@ -835,20 +849,6 @@ __metadata:
   checksum: 10c0/09b1eb3b1fa53b75d76a94622349969a962214aaa444282353cdb4e079c766c8dfd05b0d368c4335284615c3b6f49a516aa2f874dec39e5a3da60b2f8a0f156a
   languageName: node
   linkType: hard
-
-"dossier-desktop@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "dossier-desktop@workspace:."
-  dependencies:
-    "@types/node": "npm:^24"
-    electron: "npm:45.3.3"
-    electron-builder: "npm:^26"
-    typescript: "npm:^5"
-  dependenciesMeta:
-    electron:
-      built: true
-  languageName: unknown
-  linkType: soft
 
 "dotenv-expand@npm:^11.0.6":
   version: 11.0.7
