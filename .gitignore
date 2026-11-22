@@ -66,3 +66,7 @@ next-env.d.ts
 desktop/**/.yarn
 desktop/**/node_modules
 desktop/**/test-results
+
+# local secrets and scratch scripts
+password.txt
+scratch/
