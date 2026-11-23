@@ -494,7 +494,7 @@ Total resolved package versions: **956**
 | duck | 0.1.12 | BSD | app |
 | dunder-proto | 1.0.1 | MIT | app, desktop |
 | duplexer2 | 0.1.4 | BSD-3-Clause | desktop |
-| effect | 3.20.0 | MIT | app |
+| effect | 3.22.5 | MIT | app |
 | ejs | 3.1.10 | Apache-2.0 | desktop |
 | electron | 45.3.3 | MIT | desktop |
 | electron-builder | 26.18.1 | MIT | desktop |
