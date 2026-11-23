@@ -96,7 +96,7 @@ export async function sendMessage(channel: SendableChannel, message: OutgoingMes
   if (channel.type === "EMAIL") return sendEmail(channel.config as EmailConfig, channel.secret, message);
   if (channel.type === "WEBHOOK") {
     const body = webhookBody(message);
-    const headers: Record<string, string> = { "content-type": "application/json", "user-agent": `Dossier/${appVersion}`, "x-dossier-event": message.event };
+    const headers: Record<string, string> = { "content-type": "application/json", "user-agent": `CasefileJobs/${appVersion}`, "x-dossier-event": message.event };
     if (channel.secret) headers["x-dossier-signature"] = webhookSignature(channel.secret, body, Math.floor(now.getTime() / 1000));
     return post((channel.config as WebhookConfig).url, { headers, body }, "the webhook", fetchImpl);
   }

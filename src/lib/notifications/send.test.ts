@@ -42,6 +42,7 @@ describe("webhooks (E26-2)", () => {
     expect(JSON.parse(body)).toEqual({ event: "agent.run.finished", title: message.title, text: message.text, link: message.link, at: message.at, data: { newCount: 2 } });
     const headers = new Headers(init.headers);
     const seconds = Math.floor(now.getTime() / 1000);
+    expect(headers.get("user-agent")).toMatch(/^CasefileJobs\//);
     expect(headers.get("x-dossier-signature")).toBe(`t=${seconds},v1=${createHmac("sha256", "whsec_test").update(`${seconds}.${body}`).digest("hex")}`);
     expect(headers.get("x-dossier-event")).toBe("agent.run.finished");
     expect(webhookSignature("k", "{}", 1)).toMatch(/^t=1,v1=[0-9a-f]{64}$/);

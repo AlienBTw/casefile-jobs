@@ -121,7 +121,7 @@ export function ConnectorSection({
               <p role="note" className="rounded-card bg-warning-surface px-4 py-3 text-meta text-warning">
                 {local ? "This is a local address. " : "This address isn't HTTPS. "}
                 Claude on the web, Desktop and mobile, and apps in the cloud such as n8n Cloud, reach Casefile Jobs from their own servers, so they need a public HTTPS
-                address (set <code className="font-mono text-label">DOSSIER_PUBLIC_URL</code> if Dossier is reached at another one). Claude&apos;s command-line
+                address (set <code className="font-mono text-label">DOSSIER_PUBLIC_URL</code> if Casefile Jobs is reached at another one). Claude&apos;s command-line
                 app on the computer Casefile Jobs runs on can use this one.
               </p>
             )}

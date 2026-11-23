@@ -54,7 +54,7 @@ describe("Settings → MCP connector (#221, #281)", () => {
 
   it("says Claude on the web and cloud apps need a public HTTPS address, which a local one isn't", () => {
     render(<ConnectorSection initial={{ on: true, redirects: [] }} address="http://localhost:3000/api/mcp" />);
-    expect(screen.getByRole("note")).toHaveTextContent(/This is a local address\. Claude on the web, Desktop and mobile, and apps in the cloud such as n8n Cloud, reach Casefile Jobs from their own servers/);
+    expect(screen.getByRole("note")).toHaveTextContent(/This is a local address\. Claude on the web, Desktop and mobile, and apps in the cloud such as n8n Cloud, reach Casefile Jobs from their own servers.*DOSSIER_PUBLIC_URL if Casefile Jobs is reached at another one/);
   });
 
   it("adds and removes other apps' callback addresses", async () => {

@@ -170,7 +170,7 @@ function ChannelForm({ channel, onSaved, onCancel }: { channel: ChannelView | nu
           <Input
             label="Address"
             placeholder="https://n8n.example.com/webhook/…"
-            hint="Each event goes there as JSON, with an X-Dossier-Signature header made with a secret Dossier makes. Addresses on your own network work too."
+            hint="Each event goes there as JSON, with an X-Dossier-Signature header made with a secret Casefile Jobs makes. Addresses on your own network work too."
             value={draft.url}
             onChange={(event) => patch({ url: event.target.value })}
           />

@@ -32,6 +32,8 @@ describe("Settings → Notifications (E26)", () => {
     expect(screen.getByText("No channels yet. Add one to start getting messages.")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Add channel" }));
     const form = within(screen.getByRole("form", { name: "New channel" }));
+    await user.click(form.getByRole("radio", { name: "Webhook" }));
+    expect(form.getByText(/with an X-Dossier-Signature header made with a secret Casefile Jobs makes/)).toBeInTheDocument();
     await user.click(form.getByRole("radio", { name: "ntfy" }));
     await user.type(form.getByLabelText("Name"), "Phone");
     await user.type(form.getByLabelText("Topic"), "dossier");
