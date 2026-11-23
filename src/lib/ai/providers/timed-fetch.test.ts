@@ -24,10 +24,11 @@ let delay = 0;
 let address = "";
 const server = createServer((request: IncomingMessage, response: ServerResponse) => {
   request.resume();
-  setTimeout(() => {
+  const timer = setTimeout(() => {
     response.writeHead(200, { "content-type": "application/json" });
     response.end(JSON.stringify(ANSWERS[new URL(request.url ?? "/", "http://x").pathname] ?? { ok: true }));
   }, delay);
+  response.on("close", () => clearTimeout(timer));
 });
 
 beforeAll(async () => {
@@ -40,11 +41,13 @@ const ask = { task: "connection-check" as const, system: "Answer OK.", messages:
 
 describe("timedFetch (#228)", () => {
   it("waits for the headers as long as the provider's timeout says, not undici's own five minutes", async () => {
-    delay = 1_500;
+    // undici's FastTimer ticks every 499 ms when headersTimeout > 1000 ms, so 1200 ms fires around ~1.5–2.0 s under load.
+    delay = 3_000;
     const failure = await timedFetch(200)(`${address}/slow`).catch((reason: unknown) => reason);
-    // undici's default would wait 300 s; this one gave up after 1.2.
+    // undici's default would wait 300 s; this one gave up after ~1.5–2 s.
     expect((failure as Error & { cause?: { code?: string } }).cause?.code).toBe("UND_ERR_HEADERS_TIMEOUT");
     expect(toAiError(failure, { model: "m" })).toMatchObject({ kind: "timeout", detail: "UND_ERR_HEADERS_TIMEOUT" });
+    delay = 1_500;
     expect(await (await timedFetch(2_000)(`${address}/slow`)).json()).toEqual({ ok: true });
   });
 
@@ -60,7 +63,7 @@ describe("timedFetch (#228)", () => {
   });
 
   it("still says the model took too long when the provider's own timeout runs out first", async () => {
-    delay = 1_500;
+    delay = 2_500;
     const failure = await new OpenAICompatibleProvider("LOCAL", `${address}/v1`, null, "m", 300).complete(ask).catch((reason: unknown) => reason);
     expect(failure).toBeInstanceOf(AiError);
     expect((failure as AiError).kind).toBe("timeout");
