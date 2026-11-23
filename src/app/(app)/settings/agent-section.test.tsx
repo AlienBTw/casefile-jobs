@@ -55,6 +55,7 @@ describe("Settings → Job agent", () => {
     vi.mocked(moveRecurringSearch).mockResolvedValueOnce({ ok: true, data: [second, search] });
     await user.click(screen.getByRole("button", { name: "Move up: Data roles (search 2)" }));
     expect(moveRecurringSearch).toHaveBeenCalledWith({ id: "two", direction: "up" });
+    await waitFor(() => expect(screen.getByRole("button", { name: "Edit Data roles (search 1)" })).toBeEnabled());
     await user.click(screen.getByRole("button", { name: "Edit Data roles (search 1)" }));
     expect(screen.getByLabelText("What")).toHaveValue("Designer");
   });
@@ -85,6 +86,7 @@ describe("Settings → Job agent", () => {
     await user.click(screen.getByRole("button", { name: "Save search" }));
     expect(saveRecurringSearch).toHaveBeenCalledWith({ id: undefined, name: "Data roles", query: search.query, enabled: true, sort: 0, profileId: null, allProfiles: false });
     expect(await screen.findByRole("switch", { name: "Data roles" })).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByRole("button", { name: "Edit Data roles" })).toBeEnabled());
     await user.click(screen.getByRole("button", { name: "Edit Data roles" }));
     await user.clear(screen.getByLabelText("Search name"));
     await user.click(screen.getByRole("button", { name: "Cancel" }));
@@ -122,6 +124,7 @@ describe("Settings → Job agent", () => {
     expect(saveRecurringSearch).toHaveBeenCalledWith(
       expect.objectContaining({ name: "Go", profileId: "backend", query: expect.objectContaining({ keywords: "Data scientist", place: "", experience: "senior", experienceTo: undefined, remoteOnly: true, radiusKm: null }) }),
     );
+    expect(await screen.findByRole("switch", { name: "Go" })).toBeInTheDocument();
   });
 
   it("edits a stable id, disables a search and preserves values on failed saves", async () => {
@@ -132,11 +135,15 @@ describe("Settings → Job agent", () => {
     await user.click(screen.getByRole("button", { name: "Save search" }));
     expect(await screen.findByRole("alert")).toHaveTextContent("Not saved");
     expect(screen.getByLabelText("What")).toHaveValue("Data scientist NLP");
+    const saveButton = await screen.findByRole("button", { name: "Save search" });
+    await waitFor(() => expect(saveButton).toBeEnabled());
     vi.mocked(saveRecurringSearch).mockResolvedValueOnce({ ok: true, data: { ...search, query: { ...search.query, keywords: "Data scientist NLP" } } });
-    await user.click(screen.getByRole("button", { name: "Save search" }));
+    await user.click(saveButton);
     expect(saveRecurringSearch).toHaveBeenLastCalledWith(expect.objectContaining({ id: "one", query: expect.objectContaining({ keywords: "Data scientist NLP" }) }));
+    const rowSwitch = screen.getByRole("switch", { name: "Data roles" });
+    await waitFor(() => expect(rowSwitch).toBeEnabled());
     vi.mocked(setRecurringSearchEnabled).mockResolvedValueOnce({ ok: true, data: { ...search, enabled: false } });
-    await user.click(screen.getByRole("switch", { name: "Data roles" }));
+    await user.click(rowSwitch);
     await waitFor(() => expect(screen.getByRole("switch", { name: "Data roles" })).toHaveAttribute("aria-checked", "false"));
     expect(setRecurringSearchEnabled).toHaveBeenCalledWith({ id: search.id, enabled: false });
   });
@@ -173,10 +180,13 @@ describe("Settings → Job agent", () => {
     vi.mocked(moveRecurringSearch).mockResolvedValueOnce({ ok: true, data: [second, search, third] });
     await user.click(screen.getByRole("button", { name: "Move up: Second" }));
     expect(moveRecurringSearch).toHaveBeenCalledWith({ id: "two", direction: "up" });
-    expect(screen.getByRole("button", { name: "Move up: Second" })).toBeDisabled();
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Move up: Second" })).toBeDisabled();
+      expect(screen.getByRole("button", { name: "Delete Third" })).toBeEnabled();
+    });
     await user.click(screen.getByRole("button", { name: "Delete Third" }));
     expect(deleteRecurringSearch).not.toHaveBeenCalled();
-    const dialog = screen.getByRole("alertdialog");
+    const dialog = await screen.findByRole("alertdialog");
     expect(dialog).toHaveTextContent("Existing candidates and their historical search labels stay");
     vi.mocked(deleteRecurringSearch).mockResolvedValueOnce({ ok: true, data: null });
     await user.click(within(dialog).getByRole("button", { name: "Delete search" }));

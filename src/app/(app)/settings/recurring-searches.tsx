@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { startTransition as startReactTransition, useState, useTransition } from "react";
 
 import { useTrackSave } from "@/components/save-tracker";
 import { toastResult } from "@/components/toast";
@@ -54,13 +54,15 @@ export function RecurringSearches({ initial, suggestedQuery, sources, countries,
   };
   const toggle = (search: SavedAgentSearch, enabled: boolean) => startTransition(async () => {
     const result = toastResult(await track(setRecurringSearchEnabled({ id: search.id, enabled })));
-    if (result.ok) update(result.data);
+    if (result.ok) startReactTransition(() => update(result.data));
   });
   const move = (id: string, direction: "up" | "down") => startTransition(async () => {
     const result = toastResult(await track(moveRecurringSearch({ id, direction })));
     if (!result.ok) return;
-    setSearches(result.data);
-    router.refresh();
+    startReactTransition(() => {
+      setSearches(result.data);
+      router.refresh();
+    });
   });
 
   return (
@@ -145,9 +147,11 @@ export function RecurringSearches({ initial, suggestedQuery, sources, countries,
         startTransition(async () => {
           const result = toastResult(await track(deleteRecurringSearch({ id })));
           if (!result.ok) return;
-          setSearches((rows) => rows.filter((row) => row.id !== id));
-          setDeleting(null);
-          router.refresh();
+          startReactTransition(() => {
+            setSearches((rows) => rows.filter((row) => row.id !== id));
+            setDeleting(null);
+            router.refresh();
+          });
         });
       }}
     />
@@ -193,8 +197,10 @@ function SearchEditor({ search, suggestedQuery, sort, sources, countries, profil
     setError(null);
     startTransition(async () => {
       const result = toastResult(await track(saveRecurringSearch({ ...input, id: search?.id })));
-      if (result.ok) onSave(result.data);
-      else setError(result.error);
+      startReactTransition(() => {
+        if (result.ok) onSave(result.data);
+        else setError(result.error);
+      });
     });
   }}>
     <fieldset disabled={pending} className="flex min-w-0 flex-col gap-4">
