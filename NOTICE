@@ -8,3 +8,4 @@ Casefile Jobs is a modified version of Dossier (https://github.com/AienTech/doss
 - 2026-11-18 (dfaabe4 / tag v1.15.0 6c6c4c4): Updated base to Dossier 1.15.0.
 - 2026-11-19 (5e7a0a1, efd868c, 1a79785, 3ac2314): Added the read-only list_agent_candidates MCP connector tool (#117) and excluded local scratch scripts from tsconfig.
 - 2026-11-22: Established Casefile Jobs (https://github.com/AlienBTw/casefile-jobs) as a standalone fork: rebranded user-facing UI, docs, packaging, Docker/CI configs, and desktop app; preserved LICENSE (AGPL-3.0) and upstream attribution; pointed source/release/update links to AlienBTw/casefile-jobs; disabled AienTech-hosted telemetry, announcement, and portal-catalog endpoints when no custom URL is configured; added NOTICE, CHANGELOG.md, and THIRD_PARTY_NOTICES.md.
+- 2026-11-23: Pinned transitive effect to 3.22.5 (GHSA-7589-6fvf-x4pw), replaced remaining user-facing Dossier strings, and stabilized async transition and fetch-timeout tests.

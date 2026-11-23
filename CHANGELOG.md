@@ -9,7 +9,7 @@ Casefile Jobs was forked from **Dossier `v1.15.0`** ([AienTech/dossier](https://
 - Upstream tag: `v1.15.0` (`6c6c4c469bb23305654550ed15deb16087564973`)
 - Branch base commit before rebrand: `3ac2314546377ab6da9b26833b5e45b1cbe5d84d`
 
-## [Unreleased] - 2026-11-22
+## [Unreleased] - 2026-11-23
 
 ### Changed
 - Rebranded the standalone project identity to **Casefile Jobs** (`AlienBTw/casefile-jobs`) across the web app, desktop app, static site, documentation, package manifests, Docker Compose, and GitHub workflows.
@@ -22,6 +22,13 @@ Casefile Jobs was forked from **Dossier `v1.15.0`** ([AienTech/dossier](https://
 - `NOTICE` and `CHANGELOG.md` documenting upstream Dossier attribution, fork point, and modification history.
 - `THIRD_PARTY_NOTICES.md` inventorying npm and desktop dependency licenses and bundled OFL-1.1 fonts.
 - `password.txt` and `scratch/` rules in `.gitignore`.
+
+### Fixed
+- Replaced remaining user-facing `Dossier` strings in the password-hash helper, webhook `User-Agent` header (`CasefileJobs/<version>`), MCP connector and notification webhook hints, and email conversation test fixture.
+- Stabilized React 19 async transition state updates in `RecurringSearches` / `SearchEditor` and widened `timed-fetch` test server delays beyond undici's `FastTimer` 499 ms tick granularity.
+
+### Security
+- Pinned transitive `effect` to `3.22.5` via `package.json` `resolutions` to address `GHSA-7589-6fvf-x4pw`.
 
 ## Pre-fork Additions on Top of Dossier 1.15.0 (2026-11-02 to 2026-11-19)
 
